@@ -1,11 +1,3 @@
----
-title: git托管代码
-date: 2019-09-03 14:06:57
-categories: git的使用
----
-
-
-
 把远程仓库初始化之后，需要先迁移到本地
 
 需要使用一个命令
@@ -60,23 +52,25 @@ git push
 
 - 不能合并没有任何关联的历史记录
 
+![20-git-pull-error](assets\20-git-pull-error.png)
+
 - 解决：在最后添加命令：--allow-unraleted-histories
 
-
+![21-pull-success](assets\21-pull-success.png)
 
 - pull的时候有可能造成文件冲突：都有README.md文件
 
+![22-conflict](assets\22-conflict.png)
+
 - 解决冲突：
 
-  使用vscode打开
-  
-  ![1567492754217](https://s2.ax1x.com/2019/09/03/nkA5vT.png)
+  ![23-conflict-deal](assets\23-conflict-deal.png)
 
 
 
-##### 放弃更改
 
-![放弃本地修改](https://s2.ax1x.com/2019/09/03/nkAqa9.png)
+
+![放弃本地修改](C:\Users\24642\Desktop\git笔记\assets\放弃本地修改.png)
 
 
 
