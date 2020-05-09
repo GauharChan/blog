@@ -1,5 +1,17 @@
 # blog
 
+## 本地运行blog
+
+```sh
+yarn dev
+```
+
+## 打包blog
+
+```sh
+yarn docs:build
+```
+
 ## Project setup
 ```
 yarn install
