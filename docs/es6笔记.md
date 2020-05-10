@@ -1,8 +1,8 @@
 
 
-### 字符串扩展
+## 字符串扩展
 
-#### 1. Unicode表示法
+### 1. Unicode表示法
 
  允许采用`\uxxxx`形式表示一个字符 
 
@@ -27,11 +27,11 @@
 // "𠮷"
 ```
 
-#### 2.字符串的for...of循环
+### 2.字符串的for...of循环
 
 ES6为字符串添加了遍历器接口，所以可以使用`for of`， 这个遍历器最大的优点是可以识别大于`0xFFFF`的码点 。
 
-#### 3. 模板字符串
+### 3. 模板字符串
 
 `${变量}`，这个语法里面可以进行运算
 
@@ -56,7 +56,7 @@ const tmpl = addrs => `
 `;
 ```
 
-#### 4. 标签模板
+### 4. 标签模板
 
  标签模板其实不是模板，而是函数调用的一种特殊形式。“标签”指的就是函数，紧跟在后面的模板字符串就是它的参数。 
 
@@ -66,9 +66,9 @@ alert`123`
 alert(123)
 ```
 
-#### 5. 方法扩展
+### 5. 方法扩展
 
-##### 5.1 String.raw
+#### 5.1 String.raw
 
  ES6 还为原生的 String 对象，提供了一个`raw()`方法。该方法返回一个斜杠都被转义（即斜杠前面再加一个斜杠）的字符串，往往用于模板字符串的处理方法。 
 
@@ -77,7 +77,7 @@ String.raw`Hi\n${2+3}!`
 // 实际返回 "Hi\\n5!"，显示的是转义后的结果 "Hi\n5!"
 ```
 
-##### 5.2 实例方法：includes(), startsWith(), endsWith()
+#### 5.2 实例方法：includes(), startsWith(), endsWith()
 
 - **includes()**：返回布尔值，表示是否找到了参数字符串。
 - **startsWith()**：返回布尔值，表示参数字符串是否在原字符串的头部。
@@ -103,7 +103,7 @@ s.includes('Hello', 6) // false
 
 上面代码表示，使用第二个参数`n`时，`endsWith`的行为与其他两个方法有所不同。它针对前`n`个字符，而其他两个方法针对从第`n`个位置直到字符串结束。
 
-##### 5.3 repeat(num)
+#### 5.3 repeat(num)
 
 >  返回一个新字符串，表示将原字符串重复`n`次。 
 
@@ -147,7 +147,7 @@ s.includes('Hello', 6) // false
 'na'.repeat('3') // "nanana"
 ```
 
-##### 5.4 padStart(),padEnd()
+#### 5.4 padStart(),padEnd()
 
 > padStart()  头部补全
 >
@@ -168,19 +168,19 @@ s.includes('Hello', 6) // false
 
 **如果省去第二个参数，默认使用空格补全**
 
-##### 5.5 trimStart()，trimEnd()
+#### 5.5 trimStart()，trimEnd()
 
 > 和trim 一样，这两个方法一个是去除头部空格、一个是尾部
 >
 > 浏览器还部署了额外的两个方法，`trimLeft()`是`trimStart()`的别名，`trimRight()`是`trimEnd()`的别名。
 
-### 函数扩展
+## 函数扩展
 
 
 
-### Promise对象
+## Promise对象
 
-#### 1. 3个状态
+### 1. 3个状态
 
 1. pending：进行中
 2. fulfilled：已成功
@@ -210,7 +210,7 @@ promise.then(function(res){
 })
 ```
 
-#### 2. promise新建之后会立即执行
+### 2. promise新建之后会立即执行
 
 > <font color="red">**无法中途取消**</font>
 
@@ -229,7 +229,7 @@ console.log('Hi'); // 主线程
 // done
 ```
 
-#### 3.promise.all()
+### 3.promise.all()
 
 `Promise.all()`方法用于将多个 Promise 实例，包装成一个新的 Promise 实例
 
@@ -248,9 +248,9 @@ p.then(res => {
 
 
 
-### class 类
+## class 类
 
-#### es5实现类的方法
+### es5实现类的方法
 
 ```js
 function Person(firstName, lastName){
@@ -264,7 +264,7 @@ Person.prototype.name = function(){
 new Person('gauhar','chan').name()  // gauhar chan
 ```
 
-#### es6
+### es6
 
 ```js
 class Person {
@@ -283,7 +283,7 @@ new Person('gauhar', 'chan1').name()  // gauhar chan1
 
 **类的数据类型就是函数，类本身就指向构造函数。**
 
-#### 修改，增加类的属性和方法
+### 修改，增加类的属性和方法
 
 > 由于类的方法都定义在`prototype`对象上面，所以类的新方法可以添加在`prototype`对象上面。`Object.assign`方法可以很方便地一次向类添加多个方法。
 
@@ -321,7 +321,7 @@ p1.__proto__ === p2.__proto__
 >
 >注意修改原型，“类”的原始定义，影响到所有实例
 
-#### class表达式
+### class表达式
 
 ```js
 const MyClass = class Me {
@@ -337,9 +337,9 @@ let my = new MyClass()
 
 **这个类的名字是`Me`，但是`Me`只在 Class 的内部可用，指代当前类。在 Class 外部，这个类只能用`MyClass`引用。**
 
-### module
+## module
 
-#### export
+### export
 
 > 输出多个
 
@@ -354,7 +354,7 @@ export {str, fun}
 import {str, fun} from './index.js'
 ```
 
-#### export default
+### export default
 
 > 输出一个
 
@@ -368,9 +368,9 @@ import str from './index.js'
 
 
 
-### 编程风格
+## 编程风格
 
-#### 对象动态属性名
+### 对象动态属性名
 
 ```js
 const obj = {
@@ -382,7 +382,7 @@ function getKey() {
 console.log(obj);
 ```
 
-#### 初始化对象
+### 初始化对象
 
 > 最好把对象静态化
 
