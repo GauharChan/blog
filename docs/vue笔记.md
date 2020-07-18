@@ -665,7 +665,7 @@ Vue.prototype.$print = (obj, type) => {
         const log = JSON.parse(JSON.stringify(obj));
         console[type](log)
     } catch (error) {
-        console[type](log)
+        console[type](obj)
     }
 }
 ```

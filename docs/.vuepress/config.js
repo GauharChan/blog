@@ -3,7 +3,7 @@ module.exports = {
   description: 'just a blog',
   themeConfig: {
     // logo: '/assets/logo.jpg',
-    sidebarDepth: 3,
+    sidebarDepth: 6,
     lastUpdated: '最后修改时间',
     smoothScroll: true,
     nav: [
@@ -19,6 +19,14 @@ module.exports = {
       [
         '/es6笔记',
         'es6笔记'
+      ],
+      [
+        '/问题',
+        '问题'
+      ],
+      [
+        '/js学习笔记',
+        'js学习笔记'
       ],
       [
         '/webpack',
