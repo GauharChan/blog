@@ -6,6 +6,10 @@ module.exports = {
     sidebarDepth: 6,
     lastUpdated: '最后修改时间',
     smoothScroll: true,
+    algolia: {
+      apiKey: '498218f807a23244f78a4f3c20eae586',
+      indexName: 'gauharchan'
+    },
     nav: [
       { text: 'hexo版博客', link: 'https://gauhar.gitee.io/' },
       { text: '码云', link: 'https://gitee.com/gauhar' },
