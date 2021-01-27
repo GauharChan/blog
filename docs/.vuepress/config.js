@@ -17,6 +17,14 @@ module.exports = {
     ],
     sidebar: [
       [
+        '/vue3',
+        'vue3'
+      ],
+      [
+        '/乐程note',
+        '乐程note'
+      ],
+      [
         '/uniapp',
         'uniapp'
       ],
