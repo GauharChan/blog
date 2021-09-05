@@ -69,6 +69,8 @@ setup(props, context) {
 > 该函数接收一个对象，创建返回一个响应式对象。
 >
 > 通常搭配`toRefs`函数转换为一个个`ref`响应式数据，在返回出去，在模板中正常使用。如果直接返回`state`，在模板中`state.xxx`调用
+>
+> 不可直接解构属性使用，否则会丢失响应式。如需解构，请使用`toRefs`转化后再解构
 
 ```vue
 <script>
@@ -79,6 +81,8 @@ setup(props, context) {
         decs: "书本中有农场，抬头只得操场",
         count: 0
       });
+      const { count } = state // 丢失响应性😭
+      const { count } = toRefs(state) // 😁 此时count是一个ref，所以后面使用需要count.value
       return {
         ...toRefs(state)
       }
@@ -88,6 +92,8 @@ setup(props, context) {
 ```
 
 ### watch
+
+> <font color="red">`watch()` 和 `watchEffect()` 在 DOM 挂载或更新*之前*运行副作用(回调函数)，所以当侦听器运行时，模板引用还未被更新。</font>
 
 监听`reactive`对象中的某一项，`watch`的第一个参数用函数返回那一项。或者使用`toRefs`转换为`ref`对象
 
@@ -118,11 +124,13 @@ watch(num, (newVal, oldVal) => {
 num.value = 123
 ```
 
-同时监听多个
+#### 同时监听多个
 
 > 注意，回调函数的参数，第一个数组是所监听对象的新值的数组（`newNum`, `newCount`）。第二个数组是旧值的数组
 >
 > 监听多个时，只要有一个更新就会触发，如下面的num
+>
+> 注意多个同步更改只会触发一次侦听器。
 
 ```js
 const state = reactive({
@@ -140,7 +148,43 @@ num.value = 123
 
 > 执行`watch`返回的函数即可
 
+#### 监听props的变化
+
+> 对于组件的`props`对象，他是响应式的；`watch`监听整个`props`的改变没有问题。但是监听`props`的属性直接`watch`是不可行的
+
+<font color="red">**❎错误示范**</font>
+
+直接props. 某个属性，或者说直接从props中解构出来监听是不行的。
+
+```js
+watch(props.dataList, (newVal) => {
+  console.log('newVal', newVal);
+});
+```
+
+✅**正确姿势**
+
+1.使用computed返回指定属性  2.使用toRefs转换整个props
+
+```js
+// 1.使用computed返回指定属性 
+const dataList = computed(() => props.dataList)
+watch(dataList, (newVal) => {
+  console.log('newVal', newVal);
+});
+
+// 2.使用toRefs转换整个props
+const { dataList } = toRefs(props)
+watch(dataList, (newVal) => {
+  console.log('newVal', newVal);
+});
+```
+
+
+
 ### watchEffect
+
+> <font color="red">`watch()` 和 `watchEffect()` 在 DOM 挂载或更新*之前*运行副作用(回调函数)，所以当侦听器运行时，模板引用还未被更新。</font>
 
 与`watch`不同的是
 
@@ -162,7 +206,7 @@ let date = computed(() => store.state.date) // date: {startTime: '2020-01'}
 watchEffect(() => {
   console.log('date', date); //  🙁x
   // 具体到里面的startTime
-  console.log(date.startTime) // 😁√
+  console.log(date.value.startTime) // 😁√
 })
 ```
 
@@ -198,6 +242,30 @@ watchEffect((onInvalidate) => {
       })
 })
 ```
+
+上面提到的模板引用，如果想修改这个默认的行为，可以传递第二个参数更改
+
+- flush
+  - 'pre': 默认值，组件更新**前**触发副作用
+  - 'post': 组件更新**后**触发副作用
+  - 'sync': 组件更新**同步**触发副作用
+
+```js
+// 在组件更新后触发，这样你就可以访问更新的 DOM。
+// 注意：这也将推迟副作用的初始运行，直到组件的首次渲染完成。
+watchEffect(
+  () => {
+    /* ... */
+  },
+  {
+    flush: 'post'
+  }
+)
+```
+
+#### 3.2新增
+
+`watchPostEffect`和`watchSyncEffect`别名代替`flush`选项也可用于使代码意图更加明显。
 
 ### 新的生命周期
 
@@ -243,6 +311,8 @@ export default defineComponent({
 ### 节点的ref
 
 > `this.$ref.xxx`这个在vue2也是很经常使用
+>
+> <font color="red">`watch()` 和 `watchEffect()` 在 DOM 挂载或更新*之前*运行副作用(回调函数)，所以当侦听器运行时，模板引用还未被更新。</font>
 
 1. 创建一个`ref`对象，初始化为`null`
 2. return 出去
@@ -452,16 +522,60 @@ const props: Iprop = defineProps({
     default: () => ({})
   },
 })
-// 或者是ts泛型写法, 缺点是不能指定默认值
-const props1 = defineProps<{
-  filterData: any
-}>()
 console.log(props.form)
 // 数组中的值就是自定义事件名
 const emit = defineEmit(['confirm', 'reset', 'search'])
 ```
 
-路由
+### TS配合defineProps使用
+
+> 在`ts`中声明`props`主要涉及到的问题就是类型声明。
+
+原始语法中，type的类型选项是js的类型，比如：`String`、`Object`。在ts的使用中并不满足。举个🌰，定义一个`Object`类型，同时指定里面的属性的类型。或许会使用**类型断言**
+
+```ts
+interface IFilter {
+  a?: string;
+}
+const props: Iprop = defineProps({
+  filterData: {
+    type: Object as IFilter,
+    default: () => ({})
+  }
+})
+```
+
+实际上`vue3`也是推出了针对`ts`的`api`
+
+#### 使用泛型声明
+
+> 单纯这么写有个缺点，不能声明默认值
+
+```ts
+const props1 = defineProps<{
+  filterData: any
+}>()
+```
+
+**如果想指定默认值，那么就通过`withDefaults`编译器宏配合使用**
+
+> 第一个参数是定义`props`，第二个参数是默认值
+
+```ts
+interface Props {
+  msg?: string
+  labels?: string[]
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  msg: 'hello',
+  labels: () => ['one', 'two']
+})
+```
+
+
+
+## 路由
 
 ```js
 import { useRoute, useRouter } from "vue-router"
@@ -599,6 +713,29 @@ function getText(val?: string | Ref<string>) {
 
 > 子组件中`emit`触发父组件的函数的自定义事件名，需要在`emits`选项中声明
 
+**如果没有在`emits`声明，则监听的事件挂载在组件的根节点上。**这也是去除`.native`修饰符的原因
+
+子组件
+
+```vue
+<div :class="prefixCls" @click="$emit('click')">button</div>
+```
+
+父组件
+
+```vue
+<Button @click="handleClickButton" />
+<script>
+  function handleClickButton() {
+    console.log('11111', 11111);
+  }
+</script>
+```
+
+点击的时候，会触发两次！
+
+
+
 ### 组件v-model
 
 **父组件**
@@ -714,17 +851,67 @@ const asyncPageWithOptions = defineAsyncComponent({
 }
 ```
 
+### Provide / Inject
 
+> 如果`provide`响应式数据，则应该使用`readOnly`包裹，避免污染。所有的更改应该由提供`provide`的组件维护。
+>
+> 修改值的方式：`provide`一个修改方法，在`Inject`的组件中调用此方法进行过修改，而不是直接修改
 
+```js
+// 父组件
+import { defineComponent, provide, readonly, ref } from 'vue';
+export default defineComponent({
+  setup() {
+    const name = ref('gauhar')
+    const updateName = (value) => {
+      name.value = value;
+    };
+    provide('name', readonly(name));
+    provide('updateName', updateName);
+  },
+});
 
+// 子组件
+import { defineComponent, inject } from 'vue';
+export default defineComponent({
+  setup() {
+    const name = inject('name');
+    const updateName: any = inject('updateName');
+    return {
+      name,
+      updateName,
+    }
+  },
+});
+```
 
+## computed
 
+### Computed Debugging
 
+> 开发环境下的`computed`调试。`3.2新增`
 
+新增了第二个参数
 
+- `onTrack` 收集依赖时触发
+- `onTrigger` 依赖改变时(更新时)触发
 
-
-
+```js
+const plusOne = computed(() => count.value + 1, {
+  onTrack(e) {
+    // triggered when count.value is tracked as a dependency
+    debugger
+  },
+  onTrigger(e) {
+    // triggered when count.value is mutated
+    debugger
+  }
+})
+// access plusOne, should trigger onTrack
+console.log(plusOne.value)
+// mutate count.value, should trigger onTrigger
+count.value++
+```
 
 
 

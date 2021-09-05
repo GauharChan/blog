@@ -2,12 +2,6 @@
 
 ## 常用语法
 
-​	**三元表达式**
-
-​	**简单的运算**
-
-
-
 `v-once` :  只能一次性的插值， 也就是说获取数据后，更新数据的时候不会响应
 
 `v-html` :  将值以html的语法解析，**（一般很少用到）     如果让用户插值，会很危险** 
@@ -18,7 +12,7 @@
 
 `v-on` :  绑定监听事件，如：`v-on:click="函数名"`         里面的值可以是通过函数名去调用函数，或者是简单的运算语法
 
-`v-on` :  缩写   **@**  如：**`@click="函数名"`**  `.native`**修饰符监听组件根元素原生事件** 注意是组件的根元素
+`v-on` :  缩写   `@`  如：**`@click="函数名"`**  `.native`**修饰符监听组件根元素原生事件** 注意是组件的根元素
 
 `v-cloak` :  很多情况下，加载页面时，会出现{{}}表达式闪烁的问题，因为那些变量的值是加载完后才覆盖的。
 
@@ -169,6 +163,100 @@ data: {
 <div v-bind:style="[baseStyles, overridingStyles]"></div>
 ```
 
+## v-model
+
+### 修饰符
+
+#### .lazy
+
+> 默认情况下，输入框的`v-model`默认的触发事件是`input`。所以每次输入的时候就会更新数据(初了输入中文)。使用`lazy`，`input`被转换为`change`事件
+
+```html
+<!-- 在“change”时而非“input”时更新 -->
+<input v-model.lazy="msg">
+```
+
+#### .number
+
+> 输入框类型即使为`number`，`value`的类型还是字符串。
+>
+> 作用：将输入值通过`parseFloat`转换，如果无法解析则返回原始输入值。
+
+#### .trim
+
+> 如果要自动过滤用户输入的首尾空白字符，可以给 `v-model` 添加 `trim` 修饰符
+
+## 组件的v-model
+
+> 组件可以使用`v-model`，默认`prop`是`value`，事件名称是`input`
+
+```vue
+<template>
+	<component-a v-model="name" />
+</template>
+<script>
+export default {
+  data () {
+    return {
+      name: ''
+    }
+  }
+}
+</script>
+```
+
+`<component-a v-model="name" />`等价于
+
+`<component-a :value="name" @input="name = $event" ></component-a>`
+
+**组件代码**
+
+> 必须定义`prop`接收`value`
+>
+> 输入框绑定`value (attribute)`的值是`prop`的`value(property)`
+>
+> 输入框的`input`事件，触发自定义事件(`v-model`默认的名字就是`input`)，并传入新输入的值
+
+```vue
+<template>
+	<input :value="value" @input="$emit('input', $event.target.value)" />
+</template>
+<script>
+export default {
+  props: ['value']
+}
+</script>
+```
+
+更改v-model默认的prop和emit的名称，假设和你组件的prop冲突，或者说checkbox而不是input输入框的时候，prop改为checked更适合，事件改为change。
+
+> 通过定义`model`选项来改变，**注意`model`中修改后的`prop`名称，在`prop`中要定义**
+
+```vue
+<template>
+	<!-- 默认的v-model -->
+	<!-- <input :value="value" @input="$emit('input', $event.target.value)" /> -->
+	<input
+      type="checkbox"
+      v-bind:checked="checked"
+      v-on:change="$emit('change', $event.target.checked)"
+   >
+</template>
+<script>
+export default {
+  model: {
+    prop: 'checked',
+    event: 'change'
+  },
+  props: {
+    checked: Boolean
+  }
+}
+</script>
+```
+
+在父组件那边还是正常的`v-model`写法`<component-a v-model="name" />`
+
 ## v-for
 
 >  和`v-if`一样， 可以用`<template>`来循环渲染一段包含**多个元素的内容**
@@ -176,9 +264,11 @@ data: {
 >  可以用 `of` 替代 `in` 作为分隔符，因为它更接近 JavaScript 迭代器的语法：
 >
 >  最好给循环的每一项标识唯一的key值
+>
+>  <font color='red'>如果数组的数据会更新，记得记得`key`用使用`id`而不是`index`，不然会出现视图不更新的情况</font>
 
 1. 循环对象时，第一个参数是键值，第二个参数是键名,  第三个参数是索引
-2. 循环数组时，第一个参数是值(value)，第二个参数是索引(index)
+2. 循环数组时，第一个参数是值(`value`)，第二个参数是索引(`index`)
 
 ```vue
 <div v-for="(item,index) of arr">
@@ -190,7 +280,7 @@ data: {
 
 > 点击事件没有这些限制
 
-在生命周期中，Vue **不能**检测以下两种情况下数组的变动：
+在生命周期中，`Vue` **不能**检测以下两种情况下数组的变动：
 
 1. 当你利用索引直接设置一个数组项时，例如：`vm.items[indexOfItem] = newValue`
 2. 当你修改数组的长度时，例如：`vm.items.length = newLength`
@@ -212,7 +302,7 @@ export default {
 }
 ```
 
-可以使用`Vue.set(vm.items, indexOfItem, newValue)`  实例方法`this.$set`=== 全局Vue.set
+可以使用`Vue.set(vm.items, indexOfItem, newValue)`  实例方法`this.$set`=== 全局`Vue.set`
 
 ```js
 mounted(){
@@ -252,14 +342,13 @@ mounted(){
 
 如果想得到的变量是通过一定的处理才得到的，最好使用**`computed`** 函数返回。
 
-当你有一些数据需要随着其它数据变动而变动时，最好避免滥用watch，而是用`computed` 返回想要的变量
+当你有一些数据需要随着其它数据变动而变动时，最好避免滥用`watch`，而是用`computed` 返回想要的变量
 
 ```html
 <p>Computed reversed message: "{{ reversedMessage }}"</p>
 ```
 
 ```javascript
-
 computed: {
     // 计算属性的 getter
     reversedMessage: function () {
@@ -276,7 +365,7 @@ computed: {
 
 ## 侦听器watch
 
-> watch可以执行异步
+> `watch`可以执行异步
 
 ```
 监听一个变量的变动，能够返回旧值和新值
@@ -284,13 +373,62 @@ computed: {
 
 ```javascript
 watch: {
-    // 如果 `question` 发生改变，这个函数就会运行
-    question: function (newQuestion, oldQuestion) {
+  // 如果 `question` 发生改变，这个函数就会运行   首次执行时，question没有改变不会执行
+  question: function (newQuestion, oldQuestion) {
+    this.answer = 'Waiting for you to stop typing...'
+    this.debouncedGetAnswer()
+  }
+}
+```
+
+### immediate
+
+> 即时执行。上面的写法就是`immediate`默认为`false`。上面就是写了一个`handler`
+
+```js
+watch: {
+  // 第一次不用等待 `question` 发生改变，这个函数就会运行
+  question: {
+    hanlder(newQuestion, oldQuestion) {
       this.answer = 'Waiting for you to stop typing...'
       this.debouncedGetAnswer()
-    }
+    },
+    immediate: true
   }
+}
 ```
+
+### deep
+
+> 深度监听，用于监听对象下的属性改变。但这样性能消耗比较大，建议直接监听对象中的属性`'obj.name'`
+
+```js
+watch: {
+  // 第一次不用等待 `question` 发生改变，这个函数就会运行
+  question: {
+    hanlder(newQuestion, oldQuestion) {
+      this.answer = 'Waiting for you to stop typing...'
+      this.debouncedGetAnswer()
+    },
+    immediate: true,
+    deep: true // new code
+  }
+}
+
+// 直接监听对象中的属性
+watch: {
+  // 第一次不用等待 `question` 发生改变，这个函数就会运行
+  'obj.name': {
+    hanlder(newQuestion, oldQuestion) {
+      this.answer = 'Waiting for you to stop typing...'
+      this.debouncedGetAnswer()
+    },
+    immediate: true
+  }
+}
+```
+
+
 
 ## 事件处理
 
@@ -329,9 +467,9 @@ watch: {
 
 ### 按键修饰符
 
-> 直接使用按键名称更好,键名也可以通过$event.key获取
+> 直接使用按键名称更好,键名也可以通过`$event.key`获取
 >
-> 使用kebab-case 的方式写键名：page-down
+> 使用`kebab-case` 的方式写键名：`page-down`
 
 ```vue
 <input type="text" v-model="inputVal" @keyup.page-down="inputVal = 'pageDown'" @keyup.delete="inputVal = 'delete'">
@@ -359,17 +497,37 @@ watch: {
 - `.right`
 - `.middle`
 
-### 输入框修饰符
+## 组件自定义事件
 
-- `.lazy`   `change` 事件进行同步
-- `.number`  将用户输入的值转换为数字类型，一般配合`type= "number"`使用
-- `.trim`  将用户输入的值去除首尾空格
+### .sync修饰符
+
+> 语法糖，通过`.sync`修饰符前面的值决定`prop`的名称和`emit`事件的名称
+
+假设有一个prop，并且需要更新他的值(类似v-model)
+
+```vue
+<template>
+	<component-a :title="title" @update:title="title"></component-a>
+</template>
+```
+
+`component-a` 那边通过`emit`触发`update:title`事件，传入参数。从而改变父组件的`title`的值
+
+所以上面的代码可以使用.sync代替
+
+```vue
+<template>
+	<component-a :title.sync="title"></component-a>
+</template>
+```
+
+假设component-a中执行了`this.$emit('update:title', 123)`时，父组件的`title`的值就是`123`并且更新传给子组件的`prop`
 
 ## 动态组件
 
 > 通过`currentTabComponent`的值来决定显示哪个组件
 >
-> `currentTabComponent`的值可以是组件名字(name)，也可以是整个组件(整个选项对象)(引入的组件.vue文件)
+> `currentTabComponent`的值可以是组件名字(`name`)，也可以是整个组件(整个选项对象)(引入的组件`.vue`文件)
 >
 > `<keep-alive>` 将展示的组件缓存起来，而不是每次都销毁
 
@@ -433,9 +591,9 @@ requireComponent.keys().forEach(fileName => {
 
 > 可以动态绑定属性，事件
 >
-> attributeName在data中定义，如：`attributeName: href`
+> `attributeName`在data中定义，如：`attributeName: href`
 >
-> eventName: click
+> `eventName`: `click`
 >
 > 参数不能有大写，大写会被转换为小写
 
@@ -462,11 +620,11 @@ Vue.directive('focus',{
 
 ## [过渡的类名](https://cn.vuejs.org/v2/guide/transitions.html#过渡的类名)
 
-> enter 开始的状态
+> `enter` 开始的状态
 >
-> enter-actve 代表整个进入过渡过程，leave-active 代表整个离开过渡过程
+> `enter-actve` 代表整个进入过渡过程，`leave-active` 代表整个离开过渡过程
 >
-> enter-to 结束的状态
+> `enter-to` 结束的状态
 
 在进入/离开的过渡中，会有 6 个 class 切换。
 
@@ -487,11 +645,11 @@ Vue.directive('focus',{
 
 路由映射组件
 
-token不是浏览器默认行为，需要手动传值
+`token`不是浏览器默认行为，需要手动传值
 
-$emit 定义自定义事件
+`$emit` 定义自定义事件
 
-$on   监听自定义事件
+`$on`   监听自定义事件
 
 父子组件的关系是使用关系，被使用的是子组件
 
@@ -541,11 +699,225 @@ prop: {
       }
 ```
 
+## 插槽
 
+在子组件的`template`中需要的地方添加`<slot></slot>`插槽标签。
+
+在父组件使用子组件的时候，标签中间的内容就是插槽内容
+
+```vue
+<son>插槽内容</son>
+```
+
+### 默认插槽
+
+> 即不用写`name`，默认是`default`
+
+父组件
+
+```vue
+<HelloWorld msg="Welcome to Your Vue.js App" >
+    <div>这是默认插槽</div>
+</HelloWorld>
+```
+
+子组件`HelloWorld.vue`
+
+```vue
+<template>
+  <div class="hello">
+    <slot />
+    <!--其他组件-->
+    <inject />
+  </div>
+</template>
+```
+
+### 具名插槽
+
+> 带有`name`标识的插槽
+>
+> 使用`v-slot:name`
+
+父组件中使用`<template v-slot:girl></template>`
+
+```vue
+<HelloWorld msg="Welcome to Your Vue.js App" >
+    <template v-slot:girl>
+        <div>这是具名插槽</div>
+        <div>这是具名插槽2</div>
+    </template>
+</HelloWorld>
+```
+
+子组件`HelloWorld.vue`
+
+```vue
+<template>
+  <div class="hello">
+    <slot name="girl" />
+    <slot />
+    <inject />
+  </div>
+</template>
+```
+
+### 作用域插槽
+
+> 作用:子组件中的数据，父组件可以使用
+
+作用域插槽也分**默认插槽**和**具名插槽**
+
+完整写法：`v-slot:girl="slotUser"`。其中`girl`就是插槽的`name`；`slotUser`是随意的一个字符串
+
+`slotUser.girl.sex`：这里的`girl`指的是子组件中定义的数据。
+
+省略写法：`v-slot="slotUser"`等价于`v-slot:default="slotUser"`
+
+`2.6.0`新增了更简洁的写法，用`#`代替`v-slot:`。例：`#girl={sex, age}`
+
+父组件
+
+```vue
+<template v-slot:girl="slotUser">
+    <div>{{slotUser.girl.sex}}</div>
+    <div>{{slotUser.girl.age}}</div>
+</template>
+<template v-slot="slotUser">
+    <div>{{slotUser.user.age}}</div>
+    <div>{{slotUser.user.name}}</div>
+</template>
+```
+
+子组件
+
+```vue
+<template>
+  <div class="hello">
+    <!-- 作用域具名插槽 -->
+    <slot name="girl" :girl="girl" />
+    <slot />
+    <!-- 作用域匿名插槽 -->
+    <slot :user="user"></slot>
+
+    <inject />
+  </div>
+</template>
+<script>
+export default {
+  data() {
+    return {
+      user:{
+        name: 'gauhar',
+        age: 18
+      },
+      girl:{
+        sex: '👧',
+        age: '🍎'
+      },
+    }
+  },
+};
+</script>
+```
+
+作用域插槽（匿名或具名）不能和前面的匿名插槽或者具名插槽并存，代码中后者的权重高。
+
+```vue
+<template v-slot:girl="slotUser">
+    <div>{{slotUser.girlr.sex}}</div>
+    <div>{{slotUser.girlr.age}}</div>
+</template>
+
+<template v-slot:girl>
+    <div>这是具名插槽</div>
+    <div>这是具名插槽2</div>
+</template>
+
+// 页面内容：
+这是具名插槽
+这是具名插槽2
+
+--------------------------------------------------------------------
+
+<template v-slot:girl>
+    <div>这是具名插槽</div>
+    <div>这是具名插槽2</div>
+</template>
+
+<template v-slot:girl="slotUser">
+    <div>{{slotUser.girlr.sex}}</div>
+    <div>{{slotUser.girlr.age}}</div>
+</template>
+
+// 页面内容：
+👧
+🍎
+
+```
+
+上面这两个都是具名插槽`girl`，页面不会展示两个模板，只会显示后面的模板。
+
+## 插件
+
+通过全局方法 `Vue.use()` 使用插件。它需要在你调用 `new Vue()` 启动应用之前完成：
+
+```js
+// 调用 `MyPlugin.install(Vue)`
+Vue.use(MyPlugin, {...options})
+
+new Vue({
+  // ...组件选项
+})
+```
+
+### 开发插件
+
+```js
+const MyPlugin = {
+  install(Vue, options) {
+    Vue.filter('format', () => {...});
+  }
+};
+
+export default MyPlugin;
+```
+
+## 过滤器
+
+> 过滤器函数总接收表达式的值 (之前的操作链的结果) 作为第一个参数，`filterA | filterB | filterC`，`filterB`接收`filterA`的结果，`filterC`接收`filterB`的结果
+
+### 局部注册过滤器
+
+```js
+filters: {
+  capitalize: function (value) {
+    if (!value) return ''
+    value = value.toString()
+    return value.charAt(0).toUpperCase() + value.slice(1)
+  }
+}
+```
+
+### 全局注册
+
+创建 Vue 实例之前全局定义过滤器：
+
+```js
+Vue.filter('capitalize', function (value) {
+  if (!value) return ''
+  value = value.toString()
+  return value.charAt(0).toUpperCase() + value.slice(1)
+})
+
+new Vue({
+  // ...
+})
+```
 
 ## vuex
 
-流程 ：通过dispatch调用actions的方法，在actions的方法中调用mutations的处理数据的方法，mutations是专门处理state的数据的函数。最终通过getters的方法获取数据（变量)。
+流程 ：通过`dispatch`调用`actions`的方法，在`actions`的方法中调用`mutations`的处理数据的方法，mutations是专门处理`state`的数据的函数。最终通过`getters`的方法获取数据（变量)。
 
 ```js
 //store.js
@@ -621,7 +993,7 @@ async function test(){
 test();
 ```
 
-`async` 描述一个函数，函数里面使用`await` 接收一个promise对象返回的resolve回调函数中的参数
+`async` 描述一个函数，函数里面使用`await` 接收一个`promise`对象返回的`resolve`回调函数中的参数
 
 
 
@@ -652,9 +1024,9 @@ require('../../assets/images/avatar.jpg')
 
 ## 重写打印
 
-> vue的打印输出很不友好，默认不展开，为... 我们要一个一个点开
+> `vue`的打印输出很不友好，默认不展开，为`...` 我们要一个一个点开
 >
-> 如果打印的对象中有循环引用，json转换不了报错
+> 如果打印的对象中有循环引用，`json`转换不了报错
 
 在`main.js`加入以下代码，使用时：`this.$print('打印的东西')`
 
@@ -665,7 +1037,7 @@ Vue.prototype.$print = (obj, type) => {
         const log = JSON.parse(JSON.stringify(obj));
         console[type](log)
     } catch (error) {
-        console[type](obj)
+        console[type](log)
     }
 }
 ```
@@ -717,7 +1089,7 @@ vm.$emit('test', 'hi')
 
 使用`$once`监听钩子函数
 
-**使用 hook:为前缀，为 vue 生命周期钩子注册自定义事件。**
+**使用 `hook:`为前缀，为 `vue` 生命周期钩子注册自定义事件。**
 
 ```js
 mounted: function () {
@@ -731,6 +1103,97 @@ mounted: function () {
   })
 }
 ```
+
+### 递归组件
+
+> 使用组件的`name`属性递归自己，`v-if`来判断是否结束
+>
+> 注意条件判断，不然内存就炸了
+
+```vue
+<template>
+  <div class="hello">
+    <h1>{{ msg }}</h1>
+    <HelloWorld v-if="stopFlag" />
+  </div>
+</template>
+
+<script>
+export default {
+  name: "HelloWorld",
+  props: {
+    msg: String
+  },
+  data() {
+    return {
+      stopFlag: false
+    };
+  }
+</script>
+
+
+```
+
+### 内联模板
+
+> 组件标签中添加属性:` inline-template`，则标签中的内容会代替原组件中的`template`内容
+
+不管`my-component`组件文件的`template`中写了什么，只会展示类名为`customer`的内容
+
+```vue
+<my-component inline-template>
+  <div class="customer">
+    <p>These are compiled as the component's own template.</p>
+    <p>Not parent's transclusion content.</p>
+  </div>
+</my-component>
+```
+
+### 强制更新
+
+> 迫使 Vue 实例重新渲染。注意它仅仅影响实例本身和插入插槽内容的子组件，而不是所有子组件。
+>
+> 直接调用即可，如果是因为新增对象或者数组的属性、请使用`this.$set`新增属性
+
+```js
+this.$forceUpdate()
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
