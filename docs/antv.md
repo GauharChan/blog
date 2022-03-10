@@ -1,4 +1,4 @@
-## antv/x6
+# antv/x6
 
 > 用于实现流程图，可进行交互。本文记录的是`vue`的用法。
 
@@ -11,7 +11,7 @@
   sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
 ></iframe>
 
-### 安装
+## 安装
 
 > 建议使用`yarn`安装哈，一开始我也是贪`cnpm`速度快一点，结果安装不了`x6-vue-shape`
 
@@ -27,7 +27,7 @@ yarn add @vue/composition-api --dev
 ```
 
 
-### 1.创建画布
+## 1.创建画布
 
 - `keyboard`开启监听键盘
 - `selecting`设置选择节点，可通过`filter`去过滤。我只需要选择连接线(x6中叫边`Edge`)。`graph.isEdge(node)`判断传入的节点是否为边(Edge)
@@ -82,7 +82,7 @@ this.graph = new Graph({
 })
 ```
 
-### 2.注册节点
+## 2.注册节点
 
 我的节点都是用vue组件写的，并不是用原生svg的一些图形(circle、rect)，实际开发的需求肯定不是这么简单，vue组件必须用`registerVueComponent`注册，否则后面做回显时，使用不了`toJSON`和`fromJSON`。回显时使用这两个api，不需要任何的操作，渲染即可
 
@@ -125,7 +125,7 @@ Graph.registerVueComponent(
 )
 ```
 
-### 3.生成节点
+## 3.生成节点
 
 我这里用到了拖拽生成节点，对于拖拽，`x6`提供了`Dnd`。首先对`Dnd`进行创建配置
 
@@ -228,11 +228,11 @@ methods
 </script>
 ```
 
-### 4.两个节点之间连线(创建边)
+## 4.两个节点之间连线(创建边)
 
 需求是点击两个node，就让它们连线
 
-点击的事件我放在了item组件里，点击后出发父组件这边的edge方法
+点击的事件我放在了item组件里，点击后触发父组件这边的edge方法
 
 `connector`决定你的线是怎样的，我这边是圆弧
 
@@ -321,7 +321,7 @@ edge (node) {
 },
 ```
 
-### 5.选择连接线，并监听键盘删除键进行删除
+## 5.选择连接线，并监听键盘删除键进行删除
 
 因为一开始的配置就限制了只能选择edge，所以这里不用判断其他的cell
 
@@ -409,11 +409,11 @@ this.graph.bindKey(['Backspace', 'Delete'], (e) => {
 
 
 
-## L7
+# L7
 
 > 地理空间数据可视化(**地图)**
 
-### cdn
+## cdn
 
 ```html
 <script src = 'https://cdn.jsdelivr.net/npm/@antv/l7@2.2.40/dist/l7.js'></script>
@@ -438,7 +438,7 @@ declare global {
 
 ```
 
-### 创建Scene场景
+## 创建Scene场景
 
 ```ts
 const { Scene, District, LineLayer, Popup } = L7;
@@ -456,9 +456,9 @@ const scene = new Scene({
 });
 ```
 
-### 基础地图
+## 基础地图
 
-### 创建中国地图
+## 创建中国地图
 
 ```ts
 // 中国地图
@@ -497,11 +497,11 @@ const country = new District.CountryLayer(scene, {
 });
 ```
 
-### 钻地地图
+## 钻地地图
 
 
 
-### 中国地图两地连线
+## 中国地图两地连线
 
 ```js
 async initChinaChart () {
@@ -608,7 +608,7 @@ async initChinaChart () {
 }
 ```
 
-### 双曲线
+## 双曲线
 
 ```js
 initTestChart () {

@@ -3,16 +3,14 @@
 以前的写法
 
 ```js
-const asyncPage = () => import('./NextPage.vue')
+const asyncPage = () => import("./NextPage.vue");
 ```
 
 现在要放在`defineAsyncComponent`方法内
 
 ```js
-const asyncPage = defineAsyncComponent(() => import('./NextPage.vue'))
+const asyncPage = defineAsyncComponent(() => import("./NextPage.vue"));
 ```
-
-
 
 ## Composition API
 
@@ -45,22 +43,22 @@ setup(props, context) {
 
 ```vue
 <template>
-	<div @click="handleClick">{{name}}</div>
+  <div @click="handleClick">{{ name }}</div>
 </template>
 <script>
-  import { ref } from "vue";
-  export default {
-    setup () {
-      const name = ref('gauhar')
-      const handleClick = () => {
-        name.value = 'gauharchan'
-      }
-      return {
-        name,
-        handleClick
-      }
-    }
-  }
+import { ref } from "vue";
+export default {
+  setup() {
+    const name = ref("gauhar");
+    const handleClick = () => {
+      name.value = "gauharchan";
+    };
+    return {
+      name,
+      handleClick,
+    };
+  },
+};
 </script>
 ```
 
@@ -74,113 +72,116 @@ setup(props, context) {
 
 ```vue
 <script>
-  import { reactive, toRefs } from "vue";
-  export default {
-    setup () {
-      const state = reactive({
-        decs: "书本中有农场，抬头只得操场",
-        count: 0
-      });
-      const { count } = state // 丢失响应性😭
-      const { count } = toRefs(state) // 😁 此时count是一个ref，所以后面使用需要count.value
-      return {
-        ...toRefs(state)
-      }
-    }
-  }
+import { reactive, toRefs } from "vue";
+export default {
+  setup() {
+    const state = reactive({
+      decs: "书本中有农场，抬头只得操场",
+      count: 0,
+    });
+    const { count } = state; // 丢失响应性😭
+    const { count } = toRefs(state); // 😁 此时count是一个ref，所以后面使用需要count.value
+    return {
+      ...toRefs(state),
+    };
+  },
+};
 </script>
 ```
 
 ### watch
 
-> <font color="red">`watch()` 和 `watchEffect()` 在 DOM 挂载或更新*之前*运行副作用(回调函数)，所以当侦听器运行时，模板引用还未被更新。</font>
+::: danger 注意
+`watch()` 和 `watchEffect()` 在 DOM 挂载或更新*之前*运行副作用(回调函数)，所以当侦听器运行时，模板引用还未被更新。
+:::
 
 监听`reactive`对象中的某一项，`watch`的第一个参数用函数返回那一项。或者使用`toRefs`转换为`ref`对象
 
 ```js
 const state = reactive({
-  name: ''
+  name: "",
 });
 // 使用函数返回
-watch(() => state.name, (newVal, oldVal) => {
-  console.log(newVal, oldVal, 'watch');
-})
+watch(
+  () => state.name,
+  (newVal, oldVal) => {
+    console.log(newVal, oldVal, "watch");
+  }
+);
 
 // 使用toRefs
 watch(toRefs(state).name, (newVal, oldVal) => {
-  console.log(newVal, oldVal, 'watchBytoRefs');
-})
+  console.log(newVal, oldVal, "watchBytoRefs");
+});
 
-state.name = 'gauhar'
+state.name = "gauhar";
 ```
 
 所以如果要监听的是`ref`对象，直接写即可
 
 ```js
-let num = ref(0)
+let num = ref(0);
 watch(num, (newVal, oldVal) => {
-  console.log(newVal, oldVal, 'watch1'); // 123 0
-})
-num.value = 123
+  console.log(newVal, oldVal, "watch1"); // 123 0
+});
+num.value = 123;
 ```
 
 #### 同时监听多个
 
 > 注意，回调函数的参数，第一个数组是所监听对象的新值的数组（`newNum`, `newCount`）。第二个数组是旧值的数组
 >
-> 监听多个时，只要有一个更新就会触发，如下面的num
+> 监听多个时，只要有一个更新就会触发，如下面的 num
 >
 > 注意多个同步更改只会触发一次侦听器。
 
 ```js
 const state = reactive({
-  count: 456
+  count: 456,
 });
-let num = ref(0)
+let num = ref(0);
 watch([num, toRefs(state).count], ([newNum, newCount], [oldNum, oldCount]) => {
-  console.log(newNum, oldNum, 'watchNum');
-  console.log(newCount, oldCount, 'watchCount');
-})
-num.value = 123
+  console.log(newNum, oldNum, "watchNum");
+  console.log(newCount, oldCount, "watchCount");
+});
+num.value = 123;
 ```
 
 停止监听
 
 > 执行`watch`返回的函数即可
 
-#### 监听props的变化
+#### 监听 props 的变化
 
 > 对于组件的`props`对象，他是响应式的；`watch`监听整个`props`的改变没有问题。但是监听`props`的属性直接`watch`是不可行的
 
-<font color="red">**❎错误示范**</font>
+<font color="red">**❎ 错误示范**</font>
 
-直接props. 某个属性，或者说直接从props中解构出来监听是不行的。
+直接 props. 某个属性，或者说直接从 props 中解构出来监听是不行的。
 
 ```js
 watch(props.dataList, (newVal) => {
-  console.log('newVal', newVal);
+  console.log("newVal", newVal);
 });
 ```
 
 ✅**正确姿势**
 
-1.使用computed返回指定属性  2.使用toRefs转换整个props
+1.使用 computed 返回指定属性 2.使用 toRefs 转换整个 props
 
 ```js
-// 1.使用computed返回指定属性 
-const dataList = computed(() => props.dataList)
+// 1.使用computed返回指定属性
+const dataList = computed(() => props.dataList);
 watch(dataList, (newVal) => {
-  console.log('newVal', newVal);
+  console.log("newVal", newVal);
 });
 
 // 2.使用toRefs转换整个props
-const { dataList } = toRefs(props)
+const { dataList } = toRefs(props);
 watch(dataList, (newVal) => {
-  console.log('newVal', newVal);
+  console.log("newVal", newVal);
 });
 ```
-
-
 
 ### watchEffect
 
@@ -196,36 +197,34 @@ watch(dataList, (newVal) => {
 
 > 否则在页面第一次收集依赖的时候会执行。后面数据改变后不响应。
 >
-> 回调中只监听ref或reactive中的属性(ref不包含ref.value)
+> 回调中只监听 ref 或 reactive 中的属性(ref 不包含 ref.value)
 
 ```js
 import { computed, reactive, watch, watchEffect } from "vue";
 import { useStore } from "vuex";
-const store = useStore()
-let date = computed(() => store.state.date) // date: {startTime: '2020-01'}
+const store = useStore();
+let date = computed(() => store.state.date); // date: {startTime: '2020-01'}
 watchEffect(() => {
-  console.log('date', date); //  🙁x
+  console.log("date", date); //  🙁x
   // 具体到里面的startTime
-  console.log(date.value.startTime) // 😁√
-})
+  console.log(date.value.startTime); // 😁√
+});
 ```
 
-ref的例子
+ref 的例子
 
 ```js
 const obj: any = ref({
   aa: {
-    sum: 1
-  }
-})
+    sum: 1,
+  },
+});
 watchEffect(() => {
-  console.log('obj.aa', obj.value); // 🙁x
+  console.log("obj.aa", obj.value); // 🙁x
   // 具体到里面的aa
-  console.log('obj.aa', obj.value.aa); // 😁√
-})
+  console.log("obj.aa", obj.value.aa); // 😁√
+});
 ```
-
-
 
 #### onInvalidate()
 
@@ -233,14 +232,14 @@ watchEffect(() => {
 
 ```js
 watchEffect((onInvalidate) => {
-      // 异步api调用，返回一个操作对象
-      const apiCall = someAsyncMethod(props.userID)
+  // 异步api调用，返回一个操作对象
+  const apiCall = someAsyncMethod(props.userID);
 
-      onInvalidate(() => {
-        // 取消异步api的调用。
-        apiCall.cancel()
-      })
-})
+  onInvalidate(() => {
+    // 取消异步api的调用。
+    apiCall.cancel();
+  });
+});
 ```
 
 上面提到的模板引用，如果想修改这个默认的行为，可以传递第二个参数更改
@@ -258,12 +257,12 @@ watchEffect(
     /* ... */
   },
   {
-    flush: 'post'
+    flush: "post",
   }
-)
+);
 ```
 
-#### 3.2新增
+#### 3.2 新增
 
 `watchPostEffect`和`watchSyncEffect`别名代替`flush`选项也可用于使代码意图更加明显。
 
@@ -271,46 +270,55 @@ watchEffect(
 
 > 在`setup`函数中使用
 >
-> vue3取消了`beforeCreate`和`created`，由`setup`函数代替
+> vue3 取消了`beforeCreate`和`created`，由`setup`函数代替
 
 ```js
-import { set } from 'lodash';
-import { defineComponent, onBeforeMount, onBeforeUnmount, onBeforeUpdate, onErrorCaptured, onMounted, onUnmounted, onUpdated } from 'vue';
+import { set } from "lodash";
+import {
+  defineComponent,
+  onBeforeMount,
+  onBeforeUnmount,
+  onBeforeUpdate,
+  onErrorCaptured,
+  onMounted,
+  onUnmounted,
+  onUpdated,
+} from "vue";
 export default defineComponent({
   setup(props, context) {
-    onBeforeMount(()=> {
-      console.log('beformounted!')
-    })
+    onBeforeMount(() => {
+      console.log("beformounted!");
+    });
     onMounted(() => {
-      console.log('mounted!')
-    })
+      console.log("mounted!");
+    });
 
-    onBeforeUpdate(()=> {
-      console.log('beforupdated!')
-    })
+    onBeforeUpdate(() => {
+      console.log("beforupdated!");
+    });
     onUpdated(() => {
-      console.log('updated!')
-    })
+      console.log("updated!");
+    });
 
-    onBeforeUnmount(()=> {
-      console.log('beforunmounted!')
-    })
+    onBeforeUnmount(() => {
+      console.log("beforunmounted!");
+    });
     onUnmounted(() => {
-      console.log('unmounted!')
-    })
+      console.log("unmounted!");
+    });
 
-    onErrorCaptured(()=> {
-      console.log('errorCaptured!')
-    })
+    onErrorCaptured(() => {
+      console.log("errorCaptured!");
+    });
 
-    return {}
-  }
+    return {};
+  },
 });
 ```
 
-### 节点的ref
+### 节点的 ref
 
-> `this.$ref.xxx`这个在vue2也是很经常使用
+> `this.$ref.xxx`这个在 vue2 也是很经常使用
 >
 > <font color="red">`watch()` 和 `watchEffect()` 在 DOM 挂载或更新*之前*运行副作用(回调函数)，所以当侦听器运行时，模板引用还未被更新。</font>
 
@@ -321,26 +329,26 @@ export default defineComponent({
 
 ```vue
 <template>
-	<audio
-       controls
-       ref="audio"
-       src="http://gauhar.top/music/static/media/%E6%9E%97%E4%BF%8A%E6%9D%B0-%E9%9B%AA%E8%90%BD%E4%B8%8B%E7%9A%84%E5%A3%B0%E9%9F%B3.ff6502e.mp3"
-       loop
-   ></audio>
+  <audio
+    controls
+    ref="audio"
+    src="http://gauhar.top/music/static/media/%E6%9E%97%E4%BF%8A%E6%9D%B0-%E9%9B%AA%E8%90%BD%E4%B8%8B%E7%9A%84%E5%A3%B0%E9%9F%B3.ff6502e.mp3"
+    loop
+  ></audio>
 </template>
 <script>
-	import { onMounted, reactive, ref } from "vue";
-  export default {
-    setup () {
-      const audio = ref(null)
-      onMounted (() => {
-        console.log(audio.value) // 原生dom
-      })
-      return {
-        audio
-      }
-    }
-  }
+import { onMounted, reactive, ref } from "vue";
+export default {
+  setup() {
+    const audio = ref(null);
+    onMounted(() => {
+      console.log(audio.value); // 原生dom
+    });
+    return {
+      audio,
+    };
+  },
+};
 </script>
 ```
 
@@ -349,20 +357,20 @@ export default defineComponent({
 > 在`main.js`中，通过实例的`config.globalProperties`绑定全局变量
 
 ```js
-import { createApp } from 'vue'
-import App from './App.vue'
-import './index.css'
+import { createApp } from "vue";
+import App from "./App.vue";
+import "./index.css";
 
-const app = createApp(App)
-app.config.globalProperties.$message = '123'
-app.mount('#app')
+const app = createApp(App);
+app.config.globalProperties.$message = "123";
+app.mount("#app");
 ```
 
 在页面中通过`config.globalProperties`的`ctx`获取
 
 ```js
-const {ctx: that}: any = getCurrentInstance()
-console.log(that.$message) // 123
+const { ctx: that }: any = getCurrentInstance();
+console.log(that.$message); // 123
 ```
 
 但是，**在 setup 中不可以调用 getCurrentInstance().ctx 来获取<font color="red">组件内部数据</font>，因为在 prod 会被干掉**
@@ -370,11 +378,9 @@ console.log(that.$message) // 123
 <font color="blue">推荐使用`proxy`获取，无论开发还是生产环境都可以获取到</font>
 
 ```js
-const that: any = getCurrentInstance()?.proxy
-console.log(that.$message) // 123
+const that: any = getCurrentInstance()?.proxy;
+console.log(that.$message); // 123
 ```
-
-
 
 ## TreeShaking
 
@@ -382,25 +388,25 @@ console.log(that.$message) // 123
 >
 > 使得最后打出来的包体积更小
 
-## reactive代替vuex
+## reactive 代替 vuex
 
-> 很多时候只是为了组件之间通信、有个全局的响应数据可以获取。都用vuex，就会显得有点**大材小用**的意思
+> 很多时候只是为了组件之间通信、有个全局的响应数据可以获取。都用 vuex，就会显得有点**大材小用**的意思
 
 和`vuex`一样，`state`中定义变量。`mutation`定义逻辑方法，通过`mutation`的方法去改变`state`中的值
 
 ```js
 // store/state.js
 export default {
-  name: 'gauhar'
-}
+  name: "gauhar",
+};
 
 // store/mutation.js
 export default {
-  setName (state, value) {
+  setName(state, value) {
     // do something
-    state.name = value + 'commit'
-  }
-}
+    state.name = value + "commit";
+  },
+};
 ```
 
 store/index.js
@@ -410,17 +416,17 @@ store/index.js
 - `commit`方法接收两个参数，第一个是`mutation.js` 中的函数名第二个是新的值
 
 ```js
-import data from './state'
-import mutation from './mutation'
-import { readonly, reactive } from 'vue'
+import data from "./state";
+import mutation from "./mutation";
+import { readonly, reactive } from "vue";
 
-const reactiveData = reactive(data)
+const reactiveData = reactive(data);
 
 export const commit = (fn, value) => {
-  mutation[fn](reactiveData, value) // 把可更改的响应数据给mutation
-}
+  mutation[fn](reactiveData, value); // 把可更改的响应数据给mutation
+};
 
-export const state =  readonly(reactiveData)
+export const state = readonly(reactiveData);
 ```
 
 main.js
@@ -428,45 +434,45 @@ main.js
 - 使用`provide`往后代组件推
 
 ```js
-import { createApp } from 'vue'
-import App from './App.vue'
-import {state, commit} from './store'
-import './index.css'
+import { createApp } from "vue";
+import App from "./App.vue";
+import { state, commit } from "./store";
+import "./index.css";
 
-const app = createApp(App)
-app.provide('state', state)
-app.provide('commit', commit)
-app.mount('#app')
+const app = createApp(App);
+app.provide("state", state);
+app.provide("commit", commit);
+app.mount("#app");
 ```
 
 后代任意组件通过`inject`调用
 
-- `let storeData: any = inject('state')`  get
-- `let commit: any = inject('commit') `  set
+- `let storeData: any = inject('state')` get
+- `let commit: any = inject('commit')` set
 
 ```vue
 <template>
-  <div @click="handleLogText">{{isRefText}}</div>
+  <div @click="handleLogText">{{ isRefText }}</div>
 </template>
-<script lang='ts'>
-import { unref, ref, Ref, inject, defineComponent } from 'vue'
+<script lang="ts">
+import { unref, ref, Ref, inject, defineComponent } from "vue";
 
-  export default defineComponent({
-    setup () {
-      let storeData: any = inject('state')
-  		let commit: any = inject('commit')
-      const isRefText: string = 'click me'
-      
-      const handleLogText = () => {
-        commit('setName', 'apiComponent')
-        console.log(storeData.name, 'apiComponent');
-      }
-      return {
-        isRefText,
-        handleLogText
-      }
-    }
-  })
+export default defineComponent({
+  setup() {
+    let storeData: any = inject("state");
+    let commit: any = inject("commit");
+    const isRefText: string = "click me";
+
+    const handleLogText = () => {
+      commit("setName", "apiComponent");
+      console.log(storeData.name, "apiComponent");
+    };
+    return {
+      isRefText,
+      handleLogText,
+    };
+  },
+});
 </script>
 ```
 
@@ -478,60 +484,60 @@ import { unref, ref, Ref, inject, defineComponent } from 'vue'
 - composition api，通过`const that = getCurrentInstance()?.proxy`拿到实例，`that.$store`访问
 - 再则就是通过`useStore`获取。`const store = useStore()`。`store.state.....`，`store.commit()....`
 
-### 页面中使用state的变量
+### 页面中使用 state 的变量
 
-> 通过computed返回，否则出现不响应的情况
+> 通过 computed 返回，否则出现不响应的情况
 
 ```vue
 <template>
-	<div>
-    {{date.startTime}}
+  <div>
+    {{ date.startTime }}
   </div>
 </template>
-<script setup lang='ts'>
-  import { computed } from "vue";
-  import { useStore } from "vuex";
-  const store = useStore()
-  let date = computed(() => store.state.date)
+<script setup lang="ts">
+import { computed } from "vue";
+import { useStore } from "vuex";
+const store = useStore();
+let date = computed(() => store.state.date);
 </script>
 ```
 
-## setup语法糖
+## setup 语法糖
 
 > 直接定义变量，模板使用即可
 
 ```vue
 <script setup lang="ts">
-const name = ref('gauhar')
+const name = ref("gauhar");
 const info = reactive({
-  age: 18
-})
+  age: 18,
+});
 </script>
 ```
 
-从`vue`中解构出`defineEmit`,  `defineProps`
+从`vue`中解构出`defineEmit`, `defineProps`
 
 ```js
 const props: Iprop = defineProps({
   filterData: {
     type: Object,
-    default: () => ({})
+    default: () => ({}),
   },
   form: {
     type: Object,
-    default: () => ({})
+    default: () => ({}),
   },
-})
-console.log(props.form)
+});
+console.log(props.form);
 // 数组中的值就是自定义事件名
-const emit = defineEmit(['confirm', 'reset', 'search'])
+const emit = defineEmit(["confirm", "reset", "search"]);
 ```
 
-### TS配合defineProps使用
+### TS 配合 defineProps 使用
 
 > 在`ts`中声明`props`主要涉及到的问题就是类型声明。
 
-原始语法中，type的类型选项是js的类型，比如：`String`、`Object`。在ts的使用中并不满足。举个🌰，定义一个`Object`类型，同时指定里面的属性的类型。或许会使用**类型断言**
+原始语法中，type 的类型选项是 js 的类型，比如：`String`、`Object`。在 ts 的使用中并不满足。举个 🌰，定义一个`Object`类型，同时指定里面的属性的类型。或许会使用**类型断言**
 
 ```ts
 interface IFilter {
@@ -540,9 +546,9 @@ interface IFilter {
 const props: Iprop = defineProps({
   filterData: {
     type: Object as IFilter,
-    default: () => ({})
-  }
-})
+    default: () => ({}),
+  },
+});
 ```
 
 实际上`vue3`也是推出了针对`ts`的`api`
@@ -553,8 +559,8 @@ const props: Iprop = defineProps({
 
 ```ts
 const props1 = defineProps<{
-  filterData: any
-}>()
+  filterData: any;
+}>();
 ```
 
 **如果想指定默认值，那么就通过`withDefaults`编译器宏配合使用**
@@ -563,33 +569,34 @@ const props1 = defineProps<{
 
 ```ts
 interface Props {
-  msg?: string
-  labels?: string[]
+  msg?: string;
+  labels?: string[];
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  msg: 'hello',
-  labels: () => ['one', 'two']
-})
+  msg: "hello",
+  labels: () => ["one", "two"],
+});
 ```
-
-
 
 ## 路由
 
 ```js
-import { useRoute, useRouter } from "vue-router"
-const route = useRoute()
-const router = useRouter()
-console.log(route.query)
-router.back()
+import { useRoute, useRouter } from "vue-router";
+const route = useRoute();
+const router = useRouter();
+console.log(route.query);
+router.back();
 // 监听完整的路由，包括hash、query
-watch(() => route.fullPath, (newVal, prevVal) => {
-  noBar.value = ['/login', '/error'].includes(newVal)
-})
+watch(
+  () => route.fullPath,
+  (newVal, prevVal) => {
+    noBar.value = ["/login", "/error"].includes(newVal);
+  }
+);
 ```
 
-## vite配置
+## vite 配置
 
 > 配置别名的时候，注意一下，是`/@`
 >
@@ -598,26 +605,28 @@ watch(() => route.fullPath, (newVal, prevVal) => {
 > 使用的框架、插件必须在`optimizeDeps`的`include`中声明
 
 ```ts
-import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
-import { resolve } from 'path'
+import { defineConfig } from "vite";
+import vue from "@vitejs/plugin-vue";
+import { resolve } from "path";
 
-const Enums = require('./src/enums/index')
-process.env.VITE_ENUMS = JSON.stringify(Enums)
+const Enums = require("./src/enums/index");
+process.env.VITE_ENUMS = JSON.stringify(Enums);
 
 export default defineConfig({
   plugins: [vue()],
   alias: {
-    '/@': resolve(__dirname, 'src')
+    "/@": resolve(__dirname, "src"),
   },
   optimizeDeps: {
-    include: ['js-md5', 'moment', 'ant-design-vue/es/locale/zh_CN', '@ant-design/icons-vue']
-  }
-})
-
+    include: [
+      "js-md5",
+      "moment",
+      "ant-design-vue/es/locale/zh_CN",
+      "@ant-design/icons-vue",
+    ],
+  },
+});
 ```
-
-
 
 ## 文档
 
@@ -631,7 +640,7 @@ export default defineConfig({
 
 ```ts
 function getText(val?: string | Ref<string>) {
-  return unref(val)
+  return unref(val);
 }
 ```
 
@@ -643,69 +652,71 @@ function getText(val?: string | Ref<string>) {
 
 ```vue
 <template>
-<div class="modal-box">   
-  <button @click="handleOpen('.modal-box')"> 组件里</button>
-  <button @click="handleOpen('body')"> body</button>
+  <div class="modal-box">
+    <button @click="handleOpen('.modal-box')">组件里</button>
+    <button @click="handleOpen('body')">body</button>
 
-  <teleport :to="dom">
-    <div v-if="modalOpen" class="modal">
-      <div>
-        这是一个模态窗口!
-        我的父元素是"body"！
-        <button @click="modalOpen = false">Close</button>
-  </div>
-  </div>
-  </teleport>
+    <teleport :to="dom">
+      <div v-if="modalOpen" class="modal">
+        <div>
+          这是一个模态窗口! 我的父元素是"body"！
+          <button @click="modalOpen = false">Close</button>
+        </div>
+      </div>
+    </teleport>
   </div>
 </template>
 
 <script>
-  import { reactive, toRefs } from 'vue';
-  export default {
-    setup () {
-      const state = reactive({
-        modalOpen: false,
-        dom: 'body'
-      })
-      const handleOpen = (dom) => {
-        state.dom = dom
-        state.modalOpen = true
-      }
-      return {
-        ...toRefs(state),
-        handleOpen
-      }
-    }
-  };
+import { reactive, toRefs } from "vue";
+export default {
+  setup() {
+    const state = reactive({
+      modalOpen: false,
+      dom: "body",
+    });
+    const handleOpen = (dom) => {
+      state.dom = dom;
+      state.modalOpen = true;
+    };
+    return {
+      ...toRefs(state),
+      handleOpen,
+    };
+  },
+};
 </script>
 
 <style scoped>
-  .modal {
-    position: absolute;
-    top: 0; right: 0; bottom: 0; left: 0;
-    background-color: rgba(0,0,0,.5);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
+.modal {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
 
-  .modal div {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-color: white;
-    width: 300px;
-    height: 300px;
-    padding: 5px;
-  }
-  .modal-box {
-    position: relative;
-    width: 100px;
-    height: 100px;
-    border: 1px solid #000;
-  }
+.modal div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  width: 300px;
+  height: 300px;
+  padding: 5px;
+}
+.modal-box {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  border: 1px solid #000;
+}
 </style>
 ```
 
@@ -726,17 +737,15 @@ function getText(val?: string | Ref<string>) {
 ```vue
 <Button @click="handleClickButton" />
 <script>
-  function handleClickButton() {
-    console.log('11111', 11111);
-  }
+function handleClickButton() {
+  console.log("11111", 11111);
+}
 </script>
 ```
 
 点击的时候，会触发两次！
 
-
-
-### 组件v-model
+### 组件 v-model
 
 **父组件**
 
@@ -762,33 +771,32 @@ function getText(val?: string | Ref<string>) {
 
 ```vue
 <template>
-    <div>text</div>
-    <input type="text" @input="handleInput">
-    <div>content</div>
-    <input type="text" @input="handleContentInput">
+  <div>text</div>
+  <input type="text" @input="handleInput" />
+  <div>content</div>
+  <input type="text" @input="handleContentInput" />
 </template>
 <script>
 export default {
   props: {
     text: String,
-    content: String
+    content: String,
   },
-  emits: ['update:text', 'update:content'],
-  setup(props, {emit}) {
-    function handleInput (e) {
-      emit('update:text', e.target.value)
+  emits: ["update:text", "update:content"],
+  setup(props, { emit }) {
+    function handleInput(e) {
+      emit("update:text", e.target.value);
     }
-    function handleContentInput (e) {
-      emit('update:content', e.target.value)
+    function handleContentInput(e) {
+      emit("update:content", e.target.value);
     }
     return {
       handleInput,
-      handleContentInput
+      handleContentInput,
     };
-  }
+  },
 };
 </script>
-
 ```
 
 ### defineAsyncComponent
@@ -796,29 +804,27 @@ export default {
 > 异步组件要求使用`defineAsyncComponent` 方法创建
 
 ```js
-import { defineAsyncComponent } from 'vue'
+import { defineAsyncComponent } from "vue";
 
 // 不带配置的异步组件
-const asyncPage = defineAsyncComponent(() => import('./NextPage.vue'))
+const asyncPage = defineAsyncComponent(() => import("./NextPage.vue"));
 ```
 
 如果要配置
 
 ```js
-import ErrorComponent from './components/ErrorComponent.vue'
-import LoadingComponent from './components/LoadingComponent.vue'
+import ErrorComponent from "./components/ErrorComponent.vue";
+import LoadingComponent from "./components/LoadingComponent.vue";
 
 // 待配置的异步组件
 const asyncPageWithOptions = defineAsyncComponent({
-  loader: () => import('./NextPage.vue'), // component
+  loader: () => import("./NextPage.vue"), // component
   delay: 200,
   timeout: 3000,
   errorComponent: ErrorComponent,
-  loadingComponent: LoadingComponent
-})
+  loadingComponent: LoadingComponent,
+});
 ```
-
-
 
 ### 按键修饰符
 
@@ -843,7 +849,7 @@ const asyncPageWithOptions = defineAsyncComponent({
 
 > 在父组件中覆盖子组件的样式时，如果父组件是局部样式`(scoped)`会出现无法修改的情况。这时得用**更深**的选择器
 >
-> 等大多数用户迁移vue3后，将会弃用`/deep/`、`>>>`。vue3中改为`:deep(css选择器)`
+> 等大多数用户迁移 vue3 后，将会弃用`/deep/`、`>>>`。vue3 中改为`:deep(css选择器)`
 
 ```scss
 :deep(.blue) {
@@ -859,28 +865,28 @@ const asyncPageWithOptions = defineAsyncComponent({
 
 ```js
 // 父组件
-import { defineComponent, provide, readonly, ref } from 'vue';
+import { defineComponent, provide, readonly, ref } from "vue";
 export default defineComponent({
   setup() {
-    const name = ref('gauhar')
+    const name = ref("gauhar");
     const updateName = (value) => {
       name.value = value;
     };
-    provide('name', readonly(name));
-    provide('updateName', updateName);
+    provide("name", readonly(name));
+    provide("updateName", updateName);
   },
 });
 
 // 子组件
-import { defineComponent, inject } from 'vue';
+import { defineComponent, inject } from "vue";
 export default defineComponent({
   setup() {
-    const name = inject('name');
-    const updateName: any = inject('updateName');
+    const name = inject("name");
+    const updateName: any = inject("updateName");
     return {
       name,
       updateName,
-    }
+    };
   },
 });
 ```
@@ -900,22 +906,15 @@ export default defineComponent({
 const plusOne = computed(() => count.value + 1, {
   onTrack(e) {
     // triggered when count.value is tracked as a dependency
-    debugger
+    debugger;
   },
   onTrigger(e) {
     // triggered when count.value is mutated
-    debugger
-  }
-})
+    debugger;
+  },
+});
 // access plusOne, should trigger onTrack
-console.log(plusOne.value)
+console.log(plusOne.value);
 // mutate count.value, should trigger onTrigger
-count.value++
+count.value++;
 ```
-
-
-
-
-
-
-

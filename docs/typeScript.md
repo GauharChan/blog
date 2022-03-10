@@ -6,8 +6,6 @@
 tsc --init
 ```
 
-
-
 ## 联合类型
 
 > 使用`|`分隔类型
@@ -16,6 +14,19 @@ tsc --init
 let nameOrAge: string | number = 'gauhar'
 nameOrAge = 18
 ```
+
+## 合并类型
+
+> 使用`&`符号，将多个类型合并
+
+```ts
+const name: { firstName: string } & { lastName: string } = {
+  firstName: 'gauhar',
+  lastName: 'chan',
+};
+```
+
+
 
 ## interface接口
 
