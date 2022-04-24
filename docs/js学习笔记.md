@@ -1,4 +1,4 @@
-
+<Banner />
 
 ## 1.变量
 
@@ -15,27 +15,27 @@ var a = 1;
 代码的过程是
 
 ```js
-var a
-a = 1
+var a;
+a = 1;
 ```
 
 所以可以单纯定义一个变量名
 
 ```js
-var a  // undefined
+var a; // undefined
 // 此时并没有给变量a赋值，所以他的默认值是undefined
 ```
 
 如果不使用`var`关键字声明，则该变量是**全局变量**
 
-如果变量没有定义就使用的话，js会报错`变量 is not defined`
+如果变量没有定义就使用的话，js 会报错`变量 is not defined`
 
-### 1.1命名规则
+### 1.1 命名规则
 
 - 第一个字符，可以是任意 Unicode 字母（包括英文字母和其他语言的字母），以及美元符号（`$`）和下划线（`_`）。
 - 第二个字符及后面的字符，除了 Unicode 字母、美元符号和下划线，还可以用数字`0-9`。
 
-### 1.2变量的重复赋值
+### 1.2 变量的重复赋值
 
 如果变量的名字相同，且在同一作用域下，后面代码的赋值会改变原有的值
 
@@ -46,11 +46,11 @@ a = 1; ==> var a = 1 // 两种写法都会得到相同的结果
 console.log(a) // 1
 ```
 
-### 1.3undefined和 not defined的区别
+### 1.3undefined 和 not defined 的区别
 
-**<font color="red">undefined：表示变量定义了，但没有赋值</font>** 
+**<font color="red">undefined：表示变量定义了，但没有赋值</font>**
 
-**<font color="orange">not defined：表示变量未定义，没有声明</font>** 
+**<font color="orange">not defined：表示变量未定义，没有声明</font>**
 
 ## 2.注释
 
@@ -67,18 +67,17 @@ x = 1; <!-- x = 2;
 
 ## 3.条件语句
 
-### 3.1if结构
+### 3.1if 结构
 
 当只有一条语句的时候可以简写
 
 ```js
-if(true)
-console.log(1)
+if (true) console.log(1);
 // or
-if(true) console.log(1)
+if (true) console.log(1);
 ```
-**`else`代码块总是与离自己最近的那个`if`语句配对。**
 
+**`else`代码块总是与离自己最近的那个`if`语句配对。**
 
 ```js
 if(..){
@@ -95,8 +94,8 @@ var m = 1;
 var n = 2;
 
 if (m !== 1)
-if (n === 2) console.log('hello');
-else console.log('world');
+  if (n === 2) console.log("hello");
+  else console.log("world");
 ```
 
 实际上是这样的
@@ -104,14 +103,14 @@ else console.log('world');
 ```js
 if (m !== 1) {
   if (n === 2) {
-    console.log('hello');
+    console.log("hello");
   } else {
-    console.log('world');
+    console.log("world");
   }
 }
 ```
 
-### 3.2 swich结构
+### 3.2 swich 结构
 
 ```js
 switch (fruit) {
@@ -122,50 +121,46 @@ switch (fruit) {
     // ...
     break;
   default:
-    // ...
+  // ...
 }
 ```
 
 上面代码根据变量`fruit`的值，选择执行相应的`case`。如果所有`case`都不符合，则执行最后的`default`部分。需要注意的是，每个`case`代码块内部的`break`语句不能少，否则会接下去执行下一个`case`代码块，而不是跳出`switch`结构。
 
-
-
-### 3.3三元表达式
+### 3.3 三元表达式
 
 ```js
-var even = (n % 2 === 0) ? true : false;
+var even = n % 2 === 0 ? true : false;
 ```
 
 `n` 是偶数的时候，`even`的值为`true`，否则为`false`
 
-## 4循环
+## 4 循环
 
-### 4.1while循环
+### 4.1while 循环
 
 `While`语句包括一个循环条件和一段代码块，只要条件为真，就不断循环执行代码块。
 
 ```js
-while (条件)
-    语句;
+while (条件) 语句;
 
 // 或者
 while (条件) 语句;
 
 // 或者
-while(条件){
-    语句
+while (条件) {
+  语句;
 }
 ```
 
-### 4.2for循环
+### 4.2for 循环
 
 ```js
-for (初始化表达式; 条件; 递增表达式)
-  语句
+for (初始化表达式; 条件; 递增表达式) 语句;
 
 // 或者
 for (初始化表达式; 条件; 递增表达式) {
-  语句
+  语句;
 }
 ```
 
@@ -185,7 +180,7 @@ for (var i = 0; i < x; i++) {
 // 2
 ```
 
-### 4.3do while循环
+### 4.3do while 循环
 
 <font color="red">`do...while`循环与`while`循环类似，唯一的区别就是先运行一次循环体，然后判断循环条件。</font>
 
@@ -196,7 +191,7 @@ var i = 0;
 do {
   console.log(i);
   i++;
-} while(i < x);
+} while (i < x);
 ```
 
 不管条件是否为真，`do...while`循环**至少运行一次**，这是这种结构最大的特点。另外，`while`语句后面的分号注意不要省略。
@@ -205,13 +200,13 @@ do {
 var i = 0;
 
 do {
-    console.log(i);
-    i++;
+  console.log(i);
+  i++;
 } while (false);
 // 输出0
 ```
 
-### 4.4  关键字
+### 4.4 关键字
 
 `break`：语句用于跳出代码块或循环；在循环体内结束整个循环过程
 
@@ -219,18 +214,18 @@ do {
 
 `return` ：在循环中，直接跳出当前的方法,返回到该调用的方法的语句处,继续执行。
 
-return下面的代码不会继续执行。return 返回某个东西
+return 下面的代码不会继续执行。return 返回某个东西
 
 ```js
-function aa(){
-	var a = 1;
-	return a // 调用aa函数的时候，得到返回值 a的值
-    console.log(b) // 这句代码不会执行
+function aa() {
+  var a = 1;
+  return a; // 调用aa函数的时候，得到返回值 a的值
+  console.log(b); // 这句代码不会执行
 }
-var bb = aa() // 1
+var bb = aa(); // 1
 ```
 
-### 4.5标签
+### 4.5 标签
 
 JavaScript 语言允许，语句的前面有标签（label），相当于定位符，用于跳转到程序的任意位置，标签的格式如下。
 
@@ -244,13 +239,12 @@ label:
 标签通常与`break`语句和`continue`语句配合使用，跳出特定的循环。
 
 ```js
-top:
-  for (var i = 0; i < 3; i++){
-    for (var j = 0; j < 3; j++){
-      if (i === 1 && j === 1) break top;
-      console.log('i=' + i + ', j=' + j);
-    }
+top: for (var i = 0; i < 3; i++) {
+  for (var j = 0; j < 3; j++) {
+    if (i === 1 && j === 1) break top;
+    console.log("i=" + i + ", j=" + j);
   }
+}
 // i=0, j=0
 // i=0, j=1
 // i=0, j=2
@@ -265,7 +259,7 @@ top:
 foo: {
   console.log(1);
   break foo;
-  console.log('本行不会输出');
+  console.log("本行不会输出");
 }
 console.log(2);
 // 1
@@ -277,13 +271,12 @@ console.log(2);
 `continue`语句也可以与标签配合使用。
 
 ```js
-top:
-  for (var i = 0; i < 3; i++){
-    for (var j = 0; j < 3; j++){
-      if (i === 1 && j === 1) continue top;
-      console.log('i=' + i + ', j=' + j);
-    }
+top: for (var i = 0; i < 3; i++) {
+  for (var j = 0; j < 3; j++) {
+    if (i === 1 && j === 1) continue top;
+    console.log("i=" + i + ", j=" + j);
   }
+}
 // i=0, j=0
 // i=0, j=1
 // i=0, j=2
@@ -329,7 +322,7 @@ JavaScript 语言的每一个值，都属于某一种数据类型。JavaScript �
 | undefined | undefined |
 | null      | object    |
 
-`null`的类型是`object`，这是由于历史原因造成的。1995年的 JavaScript 语言第一版，只设计了五种数据类型（对象、整数、浮点数、字符串和布尔值），没考虑`null`，只把它当作`object`的一种特殊值。后来`null`独立出来，作为一种单独的数据类型，为了兼容以前的代码，`typeof null`返回`object`就没法改变了。
+`null`的类型是`object`，这是由于历史原因造成的。1995 年的 JavaScript 语言第一版，只设计了五种数据类型（对象、整数、浮点数、字符串和布尔值），没考虑`null`，只把它当作`object`的一种特殊值。后来`null`独立出来，作为一种单独的数据类型，为了兼容以前的代码，`typeof null`返回`object`就没法改变了。
 
 ### 5.2null 和 undefined
 
@@ -338,18 +331,18 @@ JavaScript 语言的每一个值，都属于某一种数据类型。JavaScript �
 区别是这样的：`null`是一个表示“空”的对象，转为数值时为`0`；`undefined`是一个表示"此处无定义"的原始值，转为数值时为`NaN`。
 
 ```js
-Number(null) // 0
-5 + null // 5
+Number(null); // 0
+5 + null; // 5
 
-Number(undefined) // NaN
-5 + undefined // NaN
+Number(undefined); // NaN
+5 + undefined; // NaN
 ```
 
-#### 5.2.1用法
+#### 5.2.1 用法
 
 `null`表示空值，即该处的值现在为空。**调用函数时，某个参数**未设置任何值，这时就可以传入`null`，表示该参数为空。比如，某个函数接受引擎抛出的错误作为参数，如果运行过程中未出错，那么这个参数就会传入`null`，表示未发生错误。
 
-### 5.3布尔值
+### 5.3 布尔值
 
 如果 JavaScript 预期某个位置应该是布尔值，会将该位置上现有的值自动转为布尔值。
 
@@ -366,92 +359,95 @@ Number(undefined) // NaN
 
 ## 6.数值
 
-### 6.1整数和浮点数
+### 6.1 整数和浮点数
 
-JavaScript 内部，所有数字都是以64位浮点数形式储存，即使整数也是如此。所以，`1`与`1.0`是相同的，是同一个数。
+JavaScript 内部，所有数字都是以 64 位浮点数形式储存，即使整数也是如此。所以，`1`与`1.0`是相同的，是同一个数。
 
-这就是说，JavaScript 语言的底层根本没有整数，所有数字都是小数（64位浮点数）。容易造成混淆的是，某些运算只有整数才能完成，此时 JavaScript 会自动把64位浮点数，转成32位整数
+这就是说，JavaScript 语言的底层根本没有整数，所有数字都是小数（64 位浮点数）。容易造成混淆的是，某些运算只有整数才能完成，此时 JavaScript 会自动把 64 位浮点数，转成 32 位整数
 
 **由于浮点数不是精确的值，所以涉及小数的比较和运算要特别小心。**
 
 ```js
-0.1 + 0.2 === 0.3
+0.1 + 0.2 === 0.3;
 // false
 
-0.3 / 0.1
-// 2.9999999999999996
+0.3 /
+  0.1(
+    // 2.9999999999999996
 
-(0.3 - 0.2) === (0.2 - 0.1)
+    0.3 - 0.2
+  ) ===
+  0.2 - 0.1;
 // false
 ```
 
-### 6.2数值精度
+### 6.2 数值精度
 
-根据国际标准 IEEE 754，JavaScript 浮点数的64个二进制位，从最左边开始，是这样组成的。
+根据国际标准 IEEE 754，JavaScript 浮点数的 64 个二进制位，从最左边开始，是这样组成的。
 
-- 第1位：符号位，`0`表示正数，`1`表示负数
-- 第2位到第12位（共11位）：指数部分
-- 第13位到第64位（共52位）：小数部分（即有效数字）
+- 第 1 位：符号位，`0`表示正数，`1`表示负数
+- 第 2 位到第 12 位（共 11 位）：指数部分
+- 第 13 位到第 64 位（共 52 位）：小数部分（即有效数字）
 
 符号位决定了一个数的正负，指数部分决定了数值的大小，小数部分决定了数值的精度。
 
-指数部分一共有11个二进制位，因此大小范围就是0到2047。IEEE 754 规定，如果指数部分的值在0到2047之间（不含两个端点），那么有效数字的第一位默认总是1，不保存在64位浮点数之中。也就是说，有效数字这时总是`1.xx...xx`的形式，其中`xx..xx`的部分保存在64位浮点数之中，最长可能为52位。因此，JavaScript 提供的有效数字最长为53个二进制位。
+指数部分一共有 11 个二进制位，因此大小范围就是 0 到 2047。IEEE 754 规定，如果指数部分的值在 0 到 2047 之间（不含两个端点），那么有效数字的第一位默认总是 1，不保存在 64 位浮点数之中。也就是说，有效数字这时总是`1.xx...xx`的形式，其中`xx..xx`的部分保存在 64 位浮点数之中，最长可能为 52 位。因此，JavaScript 提供的有效数字最长为 53 个二进制位。
 
 ```
 (-1)^符号位 * 1.xx...xx * 2^指数部分
 ```
 
-上面公式是正常情况下（指数部分在0到2047之间），一个数在 JavaScript 内部实际的表示形式。
+上面公式是正常情况下（指数部分在 0 到 2047 之间），一个数在 JavaScript 内部实际的表示形式。
 
-精度最多只能到53个二进制位，这意味着，绝对值小于2的53次方的整数，即-253到253，都可以精确表示。
+精度最多只能到 53 个二进制位，这意味着，绝对值小于 2 的 53 次方的整数，即-253 到 253，都可以精确表示。
 
 ```js
-Math.pow(2, 53) // 2的53次幂
+Math.pow(2, 53); // 2的53次幂
 // 9007199254740992
 
-Math.pow(2, 53) + 1
+Math.pow(2, 53) + 1;
 // 9007199254740992
 
-Math.pow(2, 53) + 2
+Math.pow(2, 53) + 2;
 // 9007199254740994
 
-Math.pow(2, 53) + 3
+Math.pow(2, 53) + 3;
 // 9007199254740996
 
-Math.pow(2, 53) + 4
+Math.pow(2, 53) + 4;
 // 9007199254740996
 ```
 
-上面代码中，大于2的53次方以后，整数运算的结果开始出现错误。所以，大于2的53次方的数值，都无法保持精度。由于2的53次方是一个16位的十进制数值，
+上面代码中，大于 2 的 53 次方以后，整数运算的结果开始出现错误。所以，大于 2 的 53 次方的数值，都无法保持精度。由于 2 的 53 次方是一个 16 位的十进制数值，
 
-**所以简单的法则就是，JavaScript 对15位的十进制数都可以精确处理。**
+**所以简单的法则就是，JavaScript 对 15 位的十进制数都可以精确处理。**
 
-### 6.3数值范围
+### 6.3 数值范围
 
-根据标准，64位浮点数的指数部分的长度是11个二进制位，意味着指数部分的最大值是2047（2的11次方减1）。也就是说，64位浮点数的指数部分的值最大为2047，分出一半表示负数，则 JavaScript 能够表示的数值范围为21024到2-1023（开区间），超出这个范围的数无法表示。
+根据标准，64 位浮点数的指数部分的长度是 11 个二进制位，意味着指数部分的最大值是 2047（2 的 11 次方减 1）。也就是说，64 位浮点数的指数部分的值最大为 2047，分出一半表示负数，则 JavaScript 能够表示的数值范围为 21024 到 2-1023（开区间），超出这个范围的数无法表示。
 
-<font color="red">如果一个数大于等于2的1024次方，那么就会发生“正向溢出”，即 JavaScript 无法表示这么大的数，这时就会返回`Infinity`。</font>
+<font color="red">如果一个数大于等于 2 的 1024 次方，那么就会发生“正向溢出”，即 JavaScript 无法表示这么大的数，这时就会返回`Infinity`。</font>
 
 ```js
-Math.pow(2, 1024) // Infinity
+Math.pow(2, 1024); // Infinity
 ```
 
-如果一个数小于等于2的-1075次方（指数部分最小值-1023，再加上小数部分的52位），那么就会发生为“负向溢出”，即 JavaScript 无法表示这么小的数，这时会直接返回0。
+如果一个数小于等于 2 的-1075 次方（指数部分最小值-1023，再加上小数部分的 52 位），那么就会发生为“负向溢出”，即 JavaScript 无法表示这么小的数，这时会直接返回 0。
 
 ```js
-Math.pow(2, -1075) // 0
+Math.pow(2, -1075); // 0
 ```
 
 JavaScript 提供`Number`对象的`MAX_VALUE`和`MIN_VALUE`属性，返回可以表示的具体的最大值和最小值。
 
 ```js
-Number.MAX_VALUE // 1.7976931348623157e+308
-Number.MIN_VALUE // 5e-324
+Number.MAX_VALUE; // 1.7976931348623157e+308
+Number.MIN_VALUE; // 5e-324
 ```
 
-### 6.4数字表示法
+### 6.4 数字表示法
 
-#### 6.4.1科学计数法
+#### 6.4.1 科学计数法
 
 `e`后面直接跟着数字`x`，表示省略了`+`号，和带`+`号的效果一样，表示小数点<font color="red">向右</font>移动`x`位数
 
@@ -460,42 +456,40 @@ Number.MIN_VALUE // 5e-324
 > 注意，和数字原本的正负没关系，不要被数字前面的负号`-`给混乱了
 
 ```js
-123e3 // 123000
-123e-3 // 0.123
--3.1e+1 // -31
-.1e-2 // 0.001
+123e3; // 123000
+123e-3 - // 0.123
+  3.1e1; // -31
+0.1e-2; // 0.001
 ```
 
 **以下两种情况，JavaScript 会自动将数值转为科学计数法表示，其他情况都采用字面形式直接表示。**
 
-1. **小数点前的数字多于21位。**
+1. **小数点前的数字多于 21 位。**
 
    ```js
-   1234567890123456789012
+   1234567890123456789012;
    // 1.2345678901234568e+21
    ```
 
-2. **小数点后的零多于5个。**
+2. **小数点后的零多于 5 个。**
 
    ```js
-   0.0000003 // 3e-7
+   0.0000003; // 3e-7
    ```
 
-   
-
-### 6.5特殊数值
+### 6.5 特殊数值
 
 #### 6.5.1 正零和负零
 
-JavaScript 的64位浮点数之中，有一个二进制位是符号位。这意味着，任何一个数都有一个对应的负值，就连`0`也不例外。
+JavaScript 的 64 位浮点数之中，有一个二进制位是符号位。这意味着，任何一个数都有一个对应的负值，就连`0`也不例外。
 
-JavaScript 内部实际上存在2个`0`：一个是`+0`，一个是`-0`，区别就是64位浮点数表示法的符号位不同。它们是等价的。
+JavaScript 内部实际上存在 2 个`0`：一个是`+0`，一个是`-0`，区别就是 64 位浮点数表示法的符号位不同。它们是等价的。
 
 唯一有区别的场合是，`+0`或`-0`当作分母，返回的值是不相等的。
 
 ```js
-(1 / +0) === (1 / -0) // false
-infinity     -infinity
+1 / +0 === 1 / -0; // false
+infinity - infinity;
 ```
 
 #### 6.5.2 NaN
@@ -507,35 +501,37 @@ infinity     -infinity
 `0`除以`0`也会得到`NaN`。
 
 ```js
-0/0 //NaN
+0 / 0; //NaN
 ```
 
 `NaN`不等于任何值，包括它本身。
 
 ```js
-NaN === NaN // false
+NaN === NaN; // false
 ```
 
 数组的`indexOf`方法内部使用的是严格相等运算符，所以该方法对`NaN`不成立。
 
 ```js
-[NaN].indexOf(NaN) // -1
+[NaN].indexOf(NaN); // -1
 ```
 
 #### 6.5.3 infinity
 
-`Infinity`表示“无穷”，用来表示两种场景。一种是一个正的数值太大，或一个负的数值太小，无法表示；另一种是非0数值除以0，得到`Infinity`。
+`Infinity`表示“无穷”，用来表示两种场景。一种是一个正的数值太大，或一个负的数值太小，无法表示；另一种是非 0 数值除以 0，得到`Infinity`。
 
 `Infinity`有正负之分，`Infinity`表示正的无穷，`-Infinity`表示负的无穷。
 
 `Infinity`大于一切数值（除了`NaN`），`-Infinity`小于一切数值（除了`NaN`）。
 
 ```js
-Infinity > 1000 // true
--Infinity < -1000 // true
+Infinity >
+  1000 - // true
+    Infinity <
+  -1000; // true
 ```
 
-### 6.6与数值相关的全局方法
+### 6.6 与数值相关的全局方法
 
 #### 6.6.1parseInt
 
@@ -550,30 +546,30 @@ Infinity > 1000 // true
 - 如果字符串的第一位不是数字<font color="red">(除了`+`，`-`号)，</font>则返回的结果的`NaN`
 
   ```js
-  parseInt('   81') // 81
-  
-  parseInt(1.23) // 1
+  parseInt("   81"); // 81
+
+  parseInt(1.23); // 1
   // 等同于
-  parseInt('1.23') // 1
-  
-  parseInt('15e2') // 15
-  
-  parseInt('a1') // NaN
-  parseInt('+1') // 1
+  parseInt("1.23"); // 1
+
+  parseInt("15e2"); // 15
+
+  parseInt("a1"); // NaN
+  parseInt("+1"); // 1
   ```
 
 所以，`parseInt`的返回值只有两种可能，要么是一个十进制整数，要么是`NaN`。
 
 - 如果字符串以`0x`或`0X`开头，`parseInt`会将其按照十六进制数解析。
-- 如果字符串以`0`开头，将其按照10进制解析。
+- 如果字符串以`0`开头，将其按照 10 进制解析。
 
 ```js
-parseInt('0x10') // 16
+parseInt("0x10"); // 16
 
-parseInt('011') // 11
+parseInt("011"); // 11
 ```
 
-`parseInt`方法还可以接受第二个参数（2到36之间），表示被解析的值的进制，返回该值对应的十进制数。默认情况下，`parseInt`的第二个参数为10，即默认是十进制转十进制。**我们平时用到的数字就是十进制的**
+`parseInt`方法还可以接受第二个参数（2 到 36 之间），表示被解析的值的进制，返回该值对应的十进制数。默认情况下，`parseInt`的第二个参数为 10，即默认是十进制转十进制。**我们平时用到的数字就是十进制的**
 
 #### 6.6.2 parseFloat
 
@@ -583,21 +579,21 @@ parseInt('011') // 11
 - 尤其值得注意，`parseFloat`会将空字符串转为`NaN`
 
 ```js
-parseFloat('314e-2') // 3.14
-parseFloat('0.0314E+2') // 3.14
+parseFloat("314e-2"); // 3.14
+parseFloat("0.0314E+2"); // 3.14
 
-parseFloat('') // NaN
-parseFloat([]) // NaN
+parseFloat(""); // NaN
+parseFloat([]); // NaN
 ```
 
-注意：parseInt和parseFloat，不用于Number()方法的转换规则
+注意：parseInt 和 parseFloat，不用于 Number()方法的转换规则
 
 ```js
-parseFloat('') // NaN
-Number('') // 0
+parseFloat(""); // NaN
+Number(""); // 0
 
-parseFloat('123.45#') // 123.45
-Number('123.45#') // NaN
+parseFloat("123.45#"); // 123.45
+Number("123.45#"); // NaN
 ```
 
 #### 6.6.3 isNaN
@@ -609,13 +605,13 @@ Number('123.45#') // NaN
 - 但如果是空数组，或者只有一个数值成员的数组，**还是因为`Number`方法的隐式转换**
 
 ```js
-isNaN('gauhar') // true
-相当于
-isNaN(Number('gauhar'))
+isNaN("gauhar"); // true
+相当于;
+isNaN(Number("gauhar"));
 
-isNaN([]) // false
-isNaN([123]) // false
-isNaN(['123']) // false
+isNaN([]); // false
+isNaN([123]); // false
+isNaN(["123"]); // false
 ```
 
 #### 6.6.4 isFinite()
@@ -623,12 +619,12 @@ isNaN(['123']) // false
 `isFinite`方法返回一个布尔值，表示某个值是否为正常的数值。
 
 ```js
-isFinite(Infinity) // false
-isFinite(-Infinity) // false
-isFinite(NaN) // false
-isFinite(undefined) // false
-isFinite(null) // true
-isFinite(-1) // true
+isFinite(Infinity); // false
+isFinite(-Infinity); // false
+isFinite(NaN); // false
+isFinite(undefined); // false
+isFinite(null); // true
+isFinite(-1); // true
 ```
 
 除了`Infinity`、`-Infinity`、`NaN`和`undefined`这几个值会返回`false`，`isFinite`对于其他的数值都会返回`true`。
@@ -637,53 +633,53 @@ isFinite(-1) // true
 
 由于 HTML 语言的属性值使用双引号，所以很多项目约定 JavaScript 语言的字符串只使用单引号
 
-字符串默认只能写在一行内，分成多行将会报错。多行的时候可以在每行的行末加上反斜杠`\`，或者使用`+`连接，或者是用es6的模板字符串
+字符串默认只能写在一行内，分成多行将会报错。多行的时候可以在每行的行末加上反斜杠`\`，或者使用`+`连接，或者是用 es6 的模板字符串
 
-### 7.1转义
+### 7.1 转义
 
 > 反斜杠（\）在字符串内有特殊含义，用来表示一些特殊字符，所以又称为转义符。
 
-| \0     | null             |
-| ------ | ---------------- |
-| \b     | 后退键           |
-| \f     | 换页符           |
-| **\n** | **换行符**       |
-| **\r** | **回车键**       |
-| **\t** | **制表符 Tab键** |
-| \v     | 垂直制表符       |
-| `\'`   | 单引号           |
-| `\"`   | 双引号           |
-| `\`\   | 反斜杠           |
+| \0     | null              |
+| ------ | ----------------- |
+| \b     | 后退键            |
+| \f     | 换页符            |
+| **\n** | **换行符**        |
+| **\r** | **回车键**        |
+| **\t** | **制表符 Tab 键** |
+| \v     | 垂直制表符        |
+| `\'`   | 单引号            |
+| `\"`   | 双引号            |
+| `\`\   | 反斜杠            |
 
 反斜杠还有三种特殊用法。
 
 （1）`\HHH`
 
-反斜杠后面紧跟三个八进制数（`000`到`377`），代表一个字符。`HHH`对应该字符的 Unicode 码点，比如`\251`表示版权符号。显然，这种方法只能输出256种字符。
+反斜杠后面紧跟三个八进制数（`000`到`377`），代表一个字符。`HHH`对应该字符的 Unicode 码点，比如`\251`表示版权符号。显然，这种方法只能输出 256 种字符。
 
 （2）`\xHH`
 
-`\x`后面紧跟两个十六进制数（`00`到`FF`），代表一个字符。`HH`对应该字符的 Unicode 码点，比如`\xA9`表示版权符号。这种方法也只能输出256种字符。
+`\x`后面紧跟两个十六进制数（`00`到`FF`），代表一个字符。`HH`对应该字符的 Unicode 码点，比如`\xA9`表示版权符号。这种方法也只能输出 256 种字符。
 
 （3）`\uXXXX`
 
 `\u`后面紧跟四个十六进制数（`0000`到`FFFF`），代表一个字符。`XXXX`对应该字符的 Unicode 码点，比如`\u00A9`表示版权符号。
 
 ```js
-'\251' // "©"
-'\xA9' // "©"
-'\u00A9' // "©"
+"\251"; // "©"
+"\xA9"; // "©"
+"\u00A9"; // "©"
 
-'\172' === 'z' // true
-'\x7A' === 'z' // true
-'\u007A' === 'z' // true
+"\172" === "z"; // true
+"\x7A" === "z"; // true
+"\u007A" === "z"; // true
 ```
 
 [有关字符串的方法](https://www.runoob.com/jsref/jsref-obj-string.html)
 
 ### 7.2 Base64 转码
 
-所谓 Base64 就是一种编码方法，可以将任意值转成 0～9、A～Z、a-z、`+`和`/`这64个字符组成的可打印字符。使用它的主要目的，不是为了加密，而是为了不出现特殊字符，简化程序的处理。
+所谓 Base64 就是一种编码方法，可以将任意值转成 0 ～ 9、A ～ Z、a-z、`+`和`/`这 64 个字符组成的可打印字符。使用它的主要目的，不是为了加密，而是为了不出现特殊字符，简化程序的处理。
 
 JavaScript 原生提供两个 Base64 相关的方法。这两个不可以转化**非 ASCII 码**,比如说：中文
 
@@ -691,10 +687,10 @@ JavaScript 原生提供两个 Base64 相关的方法。这两个不可以转化*
 - `atob()`：Base64 编码转为原来的值
 
 ```js
-btoa('gauhar')
-"Z2F1aGFy"
+btoa("gauhar");
+("Z2F1aGFy");
 
-btoa('呵') // 报错
+btoa("呵"); // 报错
 // Uncaught DOMException: Failed to execute 'btoa' on 'Window': The string to be encoded contains characters outside of the Latin1 range.
 ```
 
@@ -709,23 +705,21 @@ function b64Decode(str) {
   return decodeURIComponent(atob(str));
 }
 
-b64Encode('你好') // "JUU0JUJEJUEwJUU1JUE1JUJE"
-b64Decode('JUU0JUJEJUEwJUU1JUE1JUJE') // "你好"
+b64Encode("你好"); // "JUU0JUJEJUEwJUU1JUE1JUJE"
+b64Decode("JUU0JUJEJUEwJUU1JUE1JUJE"); // "你好"
 ```
-
-
 
 ## 8.对象
 
-### 8.1键名
+### 8.1 键名
 
 对象的所有键名都是字符串（ES6 又引入了 Symbol 值也可以作为键名），所以加不加引号`""`都可以。
 
 ```js
 let obj = {
-	name: 'gauhar',
-	"sex": '男'
-}
+  name: "gauhar",
+  sex: "男",
+};
 ```
 
 如果键名是数值，会被自动转为字符串。
@@ -741,75 +735,75 @@ var obj = {
 
 对象的每一个键名又称为“属性”（property），它的“键值”可以是任何数据类型。<font color="red">如果一个属性的值为函数，通常把这个属性称为“方法”</font>>，它可以像函数那样调用。
 
-### 8.2对象的引用
+### 8.2 对象的引用
 
 如果不同的变量名指向同一个对象，那么它们都是这个对象的引用，也就是说指向同一个内存地址。修改其中一个变量，会影响到其他所有变量。
 
 ```js
 let obj = {
-    a:1
-}
+  a: 1,
+};
 let bbb = obj;
-bbb.a // 1
-bbb.a = 2
-obj.a  // 2
+bbb.a; // 1
+bbb.a = 2;
+obj.a; // 2
 ```
 
 此时，如果取消某一个变量对于原对象的引用，不会影响到另一个变量。因为赋值的时候是把内存地址赋值给变量。但这种情况只限于<font color='red'>复杂类型</font>
 
 如果是<font color='blue'>基本数据类型</font>，这种赋值是对**<font color='orange'>值</font>**的拷贝，并不是拷贝内存地址，所以两个变量不会互相影响
 
-### 8.3对象属性的获取方式
+### 8.3 对象属性的获取方式
 
 两种方法，一种是通过对象`.`属性获取；另一种是通过对象`['键名']`获取，注意中括号里面的是**字符串**
 
 ```js
 let obj = {
-    name:'gauhar',
-    sex: '男'
-}
-obj.name // 'gauhar'
-obj['sex']  // '男'
+  name: "gauhar",
+  sex: "男",
+};
+obj.name; // 'gauhar'
+obj["sex"]; // '男'
 ```
 
 注意中括号里面如果没有使用`''`引号包括的话，将会使用变量
 
 ```js
-let obj = {}
-console.log(obj[a]);  // a is not defined
+let obj = {};
+console.log(obj[a]); // a is not defined
 ```
 
-这时候的a是变量，而a并没有定义
+这时候的 a 是变量，而 a 并没有定义
 
 方括号运算符内部还可以使用表达式。比如说：在里面拼接字符串
 
 当键名是数字的时候，只能通过对象`['键名']`获取
 
-### 8.4属性的查看
+### 8.4 属性的查看
 
 查看一个对象本身的所有属性，可以使用`Object.keys`方法。
 
 ```js
 var obj = {
   key1: 1,
-  key2: 2
+  key2: 2,
 };
 
 Object.keys(obj);
 // ['key1', 'key2']
 ```
 
-### 8.5属性的删除：delete 命令
+### 8.5 属性的删除：delete 命令
 
 `delete`命令用于删除对象的属性，删除成功后返回`true`。
 
 ```js
 var obj = { p: 1 };
-Object.keys(obj) // ["p"]
+Object.keys(obj); // ["p"]
 
-delete obj.p // true
-obj.p // undefined
-Object.keys(obj) // []
+delete obj.p; // true
+obj.p; // undefined
+Object.keys(obj); // []
 ```
 
 上面代码中，`delete`命令删除对象`obj`的`p`属性。删除后，再读取`p`属性就会返回`undefined`，而且`Object.keys`方法的返回值也不再包括该属性。
@@ -818,7 +812,7 @@ Object.keys(obj) // []
 
 ```js
 var obj = {};
-delete obj.p // true
+delete obj.p; // true
 ```
 
 上面代码中，对象`obj`并没有`p`属性，但是`delete`命令照样返回`true`。因此，不能根据`delete`命令的结果，认定某个属性是存在的。
@@ -827,14 +821,14 @@ delete obj.p // true
 
 **另外，需要注意的是，`delete`命令只能删除对象本身的属性，无法删除继承的属性**
 
-### 8.6属性是否存在：in 运算符
+### 8.6 属性是否存在：in 运算符
 
 `in`运算符用于检查对象是否包含某个属性（注意，检查的是键名，不是键值），如果包含就返回`true`，否则返回`false`。它的左边是一个字符串，表示属性名，右边是一个对象。
 
 ```js
 var obj = { p: 1 };
-'p' in obj // true
-'toString' in obj // true
+"p" in obj; // true
+"toString" in obj; // true
 ```
 
 `in`运算符的一个问题是，它不能识别哪些属性是对象自身的，哪些属性是继承的。就像上面代码中，对象`obj`本身并没有`toString`属性，但是`in`运算符会返回`true`，因为这个属性是继承的。
@@ -843,23 +837,23 @@ var obj = { p: 1 };
 
 ```js
 var obj = {};
-if ('toString' in obj) {
-  console.log(obj.hasOwnProperty('toString')) // false
+if ("toString" in obj) {
+  console.log(obj.hasOwnProperty("toString")); // false
 }
 ```
 
-toString方法是原型链上的方法
+toString 方法是原型链上的方法
 
 ### 8.7 for in
 
 `for...in`循环用来遍历一个对象的全部属性。
 
 ```js
-var obj = {a: 1, b: 2, c: 3};
+var obj = { a: 1, b: 2, c: 3 };
 
 for (var i in obj) {
-  console.log('键名：', i);
-  console.log('键值：', obj[i]);
+  console.log("键名：", i);
+  console.log("键值：", obj[i]);
 }
 // 键名： a
 // 键值： 1
@@ -875,7 +869,7 @@ for (var i in obj) {
 - 它不仅遍历对象自身的属性，还遍历继承的属性。一般配合`hasOwnProperty`方法一起使用，判断是否是本身的属性
 
 ```js
-var person = { name: 'gauhar' };
+var person = { name: "gauhar" };
 
 for (var key in person) {
   if (person.hasOwnProperty(key)) {
@@ -885,7 +879,7 @@ for (var key in person) {
 // name
 ```
 
-### 8.8with语句(一般情况下不推荐使用)
+### 8.8with 语句(一般情况下不推荐使用)
 
 它的作用是操作同一个对象的多个属性时，提供一些书写的方便。
 
@@ -906,47 +900,47 @@ obj.p2 = 5;
 注意，如果`with`区块内部有变量的赋值操作，必须是当前对象已经存在的属性，否则会创造一个当前作用域的**全局变量。**
 
 ```js
-let obj = {}
-with(obj){
-    a = 1
+let obj = {};
+with (obj) {
+  a = 1;
 }
-obj.a // undefined
-window.a // 1
+obj.a; // undefined
+window.a; // 1
 ```
 
 ## 9.函数
 
-### 9.1斐波那契数列
+### 9.1 斐波那契数列
 
 ```js
-function fib(num){
-    if(num === 0) return 0
-    if(num === 1) return 1
-    return fib(num - 2) + fib(num - 1)
+function fib(num) {
+  if (num === 0) return 0;
+  if (num === 1) return 1;
+  return fib(num - 2) + fib(num - 1);
 }
 ```
 
-### 9.2name属性
+### 9.2name 属性
 
 函数的`name`属性返回函数的名字。
 
 ```js
 function f1() {}
-f1.name // "f1"
+f1.name; // "f1"
 ```
 
 如果是通过变量赋值定义的函数，那么`name`属性返回变量名。
 
 ```js
 var f2 = function () {};
-f2.name // "f2"
+f2.name; // "f2"
 ```
 
 但是，上面这种情况，只有在变量的值是一个匿名函数时才是如此。如果变量的值是一个具名函数，那么`name`属性返回`function`关键字之后的那个函数名。
 
 ```js
 var f3 = function myName() {};
-f3.name // 'myName'
+f3.name; // 'myName'
 ```
 
 上面代码中，`f3.name`返回函数表达式的名字。**注意，真正的函数名还是`f3`，而`myName`这个名字只在函数体内部可用。**
@@ -960,12 +954,12 @@ function test(f) {
   console.log(f.name);
 }
 
-test(myFunc) // myFunc
+test(myFunc); // myFunc
 ```
 
 上面代码中，函数`test`内部通过`name`属性，就可以知道传入的参数是什么函数。
 
-### 9.3作用域
+### 9.3 作用域
 
 ```js
 var a = 1;
@@ -978,22 +972,22 @@ function f() {
   x();
 }
 
-f() // 1
+f(); // 1
 ```
 
 总之，函数执行时所在的作用域，**是定义时的作用域**，而不是调用时所在的作用域。
 
-#### 9.4length属性
+#### 9.4length 属性
 
-length属性，返回函数预定义的参数(形参)的个数，注意不是实参的个数
+length 属性，返回函数预定义的参数(形参)的个数，注意不是实参的个数
 
 ```js
-function aa(b,c){
-	aa.length //2
+function aa(b, c) {
+  aa.length; //2
 }
 ```
 
-### 9.5传值
+### 9.5 传值
 
 如果函数参数是复合类型的值**（数组、对象、其他函数）**，传递方式是传址传递（pass by reference）。也就是说，传入函数的原始值的**内存地址**，因此在函数内部修改参数，将会影响到原始值。
 
@@ -1005,7 +999,7 @@ function f(o) {
 }
 f(obj);
 
-obj.p // 2
+obj.p; // 2
 ```
 
 注意，如果函数内部修改的，不是参数对象的某个属性，而是替换掉整个参数，这时不会影响到原始值。
@@ -1018,12 +1012,12 @@ function f(o) {
 }
 f(obj);
 
-obj // [1, 2, 3]
+obj; // [1, 2, 3]
 ```
 
 因为这时对`o`的赋值了一个新的数组，这个数组是一个新的内存地址。
 
-### 9.6闭包
+### 9.6 闭包
 
 闭包的最大用处有两个，一个是可以读取函数内部的变量，另一个就是让这些变量始终保持在内存中
 
@@ -1036,9 +1030,9 @@ function createIncrementor(start) {
 
 var inc = createIncrementor(5);
 
-inc() // 5
-inc() // 6
-inc() // 7
+inc(); // 5
+inc(); // 6
+inc(); // 7
 ```
 
 上面代码中，`start`是函数`createIncrementor`的内部变量。通过闭包，`start`的状态被保留了，每一次调用都是在上一次调用的基础上进行计算。从中可以看到，闭包`inc`使得函数`createIncrementor`的内部环境，一直存在。所以，闭包可以看作是函数内部作用域的一个接口。
@@ -1047,9 +1041,9 @@ inc() // 7
 
 **闭包的另一个用处，是封装对象的私有属性和私有方法。**
 
-类的构造函数里定义的function，即为私有方法；而在构造函数里用var声明的变量，也相当于是私有变量。
+类的构造函数里定义的 function，即为私有方法；而在构造函数里用 var 声明的变量，也相当于是私有变量。
 
-**下面的代码中，调用Person时返回了一个对象，因此才能调用`getAge`和`setAge`，这两个私有方法。**或者把属性和方法挂载到`this`上，即可访问。
+**下面的代码中，调用 Person 时返回了一个对象，因此才能调用`getAge`和`setAge`，这两个私有方法。**或者把属性和方法挂载到`this`上，即可访问。
 
 ```js
 function Person(name) {
@@ -1064,24 +1058,24 @@ function Person(name) {
   return {
     name: name,
     getAge: getAge,
-    setAge: setAge
+    setAge: setAge,
   };
-    相当于
-    this.name = name
-    this.getAge = getAge
-    this.setAge = setAge
+  相当于;
+  this.name = name;
+  this.getAge = getAge;
+  this.setAge = setAge;
 }
 
-var p1 = Person('张三');
+var p1 = Person("张三");
 p1.setAge(25);
-p1.getAge() // 25
+p1.getAge(); // 25
 ```
 
 上面代码中，函数`Person`的内部变量`_age`，通过闭包`getAge`和`setAge`，变成了返回对象`p1`的私有变量。
 
 注意，外层函数每次运行，都会生成一个新的闭包，而这个闭包又会保留外层函数的内部变量，所以内存消耗很大。因此不能滥用闭包，否则会造成网页的性能问题。
 
-### 9.7自调用函数IIFE
+### 9.7 自调用函数 IIFE
 
 **不要让`function`出现在行首**，让引擎将其理解成一个表达式。便可以通过`()`调用函数
 
@@ -1102,26 +1096,26 @@ p1.getAge() // 25
 
 通常情况下，只对匿名函数使用这种“立即执行的函数表达式”。它的目的有两个：一是不必为函数命名，避免了污染全局变量；二是 IIFE 内部形成了一个单独的作用域，可以封装一些外部无法读取的私有变量。
 
-### 9.8   eval命令
+### 9.8 eval 命令
 
 `eval`命令接受一个字符串作为参数，并将这个**字符串当作语句执行**。
 
-eval命令没有自己的作用域，所以执行的时候会在当前作用域下，因此会影响到相同的变量，如
+eval 命令没有自己的作用域，所以执行的时候会在当前作用域下，因此会影响到相同的变量，如
 
 ```js
 var a = 1;
-eval('var a = 2')
-console.log(a) // 2
+eval("var a = 2");
+console.log(a); // 2
 ```
 
-所以在js的严格模式下规定，`eval`内部声明的变量，不会影响到外部作用域。
+所以在 js 的严格模式下规定，`eval`内部声明的变量，不会影响到外部作用域。
 
 ```js
 (function f() {
-  'use strict';
-  eval('var foo = 123');
-  console.log(foo);  // ReferenceError: foo is not defined
-})()
+  "use strict";
+  eval("var foo = 123");
+  console.log(foo); // ReferenceError: foo is not defined
+})();
 ```
 
 <font color="red">`eval`的本质是在当前作用域之中，注入代码。由于安全风险和不利于 JavaScript 引擎优化执行速度，所以一般不推荐使用。</font>
@@ -1131,10 +1125,8 @@ console.log(a) // 2
 代码：
 
 ```js
-'use strict'
+"use strict";
 ```
-
-
 
 ## 10.数组
 
@@ -1152,11 +1144,11 @@ console.log(a) // 2
 
 ### 11.1 对象相加
 
-先会执行对象的`valueOf`，返回对象本身，然后执行toString方法，转换为字符串，在相加。在谷歌控制台中执行`{p: 1} + 2`，你会得到`2`
+先会执行对象的`valueOf`，返回对象本身，然后执行 toString 方法，转换为字符串，在相加。在谷歌控制台中执行`{p: 1} + 2`，你会得到`2`
 
 ```js
 var obj = { p: 1 };
-obj + 2 // "[object Object]2"
+obj + 2; // "[object Object]2"
 ```
 
 那当然，自己可以重写`valueOf`或者`toString`方法，从而得到想要的东西。
@@ -1166,16 +1158,14 @@ obj + 2 // "[object Object]2"
 取模，就是取两数相除的余数
 
 ```js
-5 % 3 // 2
+5 % 3; // 2
 ```
 
 余数的正负，由第一个数决定
 
 ```js
--5 % 3 // -2
+-5 % 3; // -2
 ```
-
-
 
 ## 12. Number()
 
@@ -1193,22 +1183,22 @@ obj + 2 // "[object Object]2"
 Number({
   valueOf: function () {
     return 2;
-  }
-})
+  },
+});
 // 2
 
 Number({
   toString: function () {
     return 3;
-  }
-})
+  },
+});
 // 3
 
 Number({
   toString: function () {
     return {};
-  }
-})
+  },
+});
 // error
 
 Number({
@@ -1217,12 +1207,10 @@ Number({
   },
   toString: function () {
     return 3;
-  }
-})
+  },
+});
 // 2
 ```
-
-
 
 ## 13. String()
 
@@ -1244,7 +1232,7 @@ Number({
 - `NaN`
 - `''`（空字符串）
 
-## 15. 报错对象Error
+## 15. 报错对象 Error
 
 包含六个子对象：
 
@@ -1260,12 +1248,11 @@ Number({
 JavaScript 提供了`try...catch`结构，允许对错误进行处理，选择是否往下执行。
 
 ```js
-try{
-    fn();
-}
-catch(err){
-    // throw Error(err)  // 抛出异常后，下面代码console.log(111);不会执行
-    console.log(err);
+try {
+  fn();
+} catch (err) {
+  // throw Error(err)  // 抛出异常后，下面代码console.log(111);不会执行
+  console.log(err);
 }
 console.log(111);
 ```
@@ -1274,42 +1261,38 @@ console.log(111);
 
 ```js
 try {
-    fn();
-}
-catch (err) {
-    throw Error(err)  // 抛出异常的代码会在最后执行
-}
-finally {
-    console.log(111);
+  fn();
+} catch (err) {
+  throw Error(err); // 抛出异常的代码会在最后执行
+} finally {
+  console.log(111);
 }
 ```
 
-**如果catch中有`return`，`throw`代码，那么finally中的代码会先执行**
+**如果 catch 中有`return`，`throw`代码，那么 finally 中的代码会先执行**
 
 ```js
 function f() {
-    try {
-       throw '出错了！';
-    } catch (e) {
-       console.log('捕捉到内部错误');
-       throw e; // 这句原本会等到finally结束再执行
-    } finally {
-       return false; // 直接返回
-    }
+  try {
+    throw "出错了！";
+  } catch (e) {
+    console.log("捕捉到内部错误");
+    throw e; // 这句原本会等到finally结束再执行
+  } finally {
+    return false; // 直接返回
+  }
 }
 
 try {
-    f();
+  f();
 } catch (e) {
-    // 此处不会执行   因为在这代码之前执行了finally中的return false
-    
-    console.log('caught outer "bogus"');
+  // 此处不会执行   因为在这代码之前执行了finally中的return false
+
+  console.log('caught outer "bogus"');
 }
 ```
 
-
-
-## 16. console对象
+## 16. console 对象
 
 `console.log`方法支持以下占位符，不同类型的数据必须使用对应的占位符。
 
@@ -1320,24 +1303,24 @@ try {
 - `%o` 对象的链接
 - `%c` CSS 格式字符串
 
-**值的注意的是：css代码作用的是 %c 后面的代码，如下面代码中，css的代码不会影响到数字12！！**
+**值的注意的是：css 代码作用的是 %c 后面的代码，如下面代码中，css 的代码不会影响到数字 12！！**
 
 ```js
 console.log(
-    '%d %c %s ',
-    12,
-    'color:red;background:yellow;font-size:24px',
-    '这段文字是红色的，背景是黄色的',
+  "%d %c %s ",
+  12,
+  "color:red;background:yellow;font-size:24px",
+  "这段文字是红色的，背景是黄色的"
 );
 ```
 
 ### 16.1 console.count()
 
->  可以查看函数、循环多少次，不带参数的时候，默认是default
+> 可以查看函数、循环多少次，不带参数的时候，默认是 default
 
 ```js
 for (let index = 0; index < 3; index++) {
-  console.count('index')
+  console.count("index");
 }
 // index: 1
 // index: 2
@@ -1348,13 +1331,11 @@ for (let index = 0; index < 3; index++) {
 
 > 第一个参数是表达式，第二个参数是字符串。只有当第一个参数为`false`，才会提示有错误，在控制台输出第二个参数，否则不会有任何结果。
 
-下面是一个例子，判断子节点的个数是否大于等于500。
+下面是一个例子，判断子节点的个数是否大于等于 500。
 
 ```js
-console.assert(list.childNodes.length < 500, '节点个数大于等于500')
+console.assert(list.childNodes.length < 500, "节点个数大于等于500");
 ```
-
-
 
 ## 17. Object
 
@@ -1364,14 +1345,14 @@ var obj = Object();
 var obj = Object(undefined);
 var obj = Object(null);
 
-obj instanceof Object // true
+obj instanceof Object; // true
 ```
 
 上面代码的含义，是将`undefined`和`null`转为对象，结果得到了一个空对象`obj`。
 
 `instanceof`运算符用来验证，一个对象是否为指定的构造函数的实例。`obj instanceof Object`返回`true`，就表示`obj`对象是`Object`的实例。
 
- `Object(value)`与`new Object(value)`两者的语义是不同的，`Object(value)`表示将`value`转成一个对象，`new Object(value)`则表示新生成一个对象，它的值是`value`。 
+`Object(value)`与`new Object(value)`两者的语义是不同的，`Object(value)`表示将`value`转成一个对象，`new Object(value)`则表示新生成一个对象，它的值是`value`。
 
 ### 17.1 静态方法
 
@@ -1379,32 +1360,30 @@ obj instanceof Object // true
 
 > 遍历对象**自身**的属性
 
- `Object.keys()`和`Object.getOwnPropertyNames()`只有在涉及不可枚举属性时，才会有不一样的结果。`Object.keys`方法只返回可枚举的属性，`Object.getOwnPropertyNames`方法还返回不可枚举的属性名。 
+`Object.keys()`和`Object.getOwnPropertyNames()`只有在涉及不可枚举属性时，才会有不一样的结果。`Object.keys`方法只返回可枚举的属性，`Object.getOwnPropertyNames`方法还返回不可枚举的属性名。
 
 ##### 17.1.1.1 枚举类型
 
- 如果一个属性没有被标识为可枚举，循环将忽略它在对象内。也就是说在使用`for in`遍历对象的时候，会忽略不可枚举属性
+如果一个属性没有被标识为可枚举，循环将忽略它在对象内。也就是说在使用`for in`遍历对象的时候，会忽略不可枚举属性
 
 ```js
 let obj = {
-    name: 'gauhar',
-    age: 21
-}
+  name: "gauhar",
+  age: 21,
+};
 // 通过Object.defineProperty方法设置不可枚举类型属性
-Object.defineProperty(obj,'bbb',{})
-let arr = Object.keys(obj)
-let arr2 = Object.getOwnPropertyNames(obj)
+Object.defineProperty(obj, "bbb", {});
+let arr = Object.keys(obj);
+let arr2 = Object.getOwnPropertyNames(obj);
 console.log(arr); // ["name", "age"]
 console.log(arr2); //  ["name", "age", "bbb"]
 ```
 
+### 17.2 hasOwnProperty()
 
+> 会返回一个布尔值，指示对象自身属性中是否具有指定的属性（也就是，是否有指定的键）。
 
-###  17.2 hasOwnProperty() 
-
->  会返回一个布尔值，指示对象自身属性中是否具有指定的属性（也就是，是否有指定的键）。 
-
-### 17.3  属性描述对象
+### 17.3 属性描述对象
 
 > 对象的属性
 
@@ -1429,17 +1408,17 @@ console.log(arr2); //  ["name", "age", "bbb"]
 
 3. `enumerable`
 
-`enumerable`是一个布尔值，表示该属性是否可遍历，默认为`true`。如果设为`false`，会使得某些操作（比如`for...in`循环、`Object.keys()`、`JSON.stringify()`）跳过该属性。 注意：`for...in`循环包括继承的属性（因此经常配合`hasOwnProperty`判断是否是自身属性），`Object.keys`方法不包括继承的属性。 
+`enumerable`是一个布尔值，表示该属性是否可遍历，默认为`true`。如果设为`false`，会使得某些操作（比如`for...in`循环、`Object.keys()`、`JSON.stringify()`）跳过该属性。 注意：`for...in`循环包括继承的属性（因此经常配合`hasOwnProperty`判断是否是自身属性），`Object.keys`方法不包括继承的属性。
 
 4. `configurable`
 
 `configurable`是一个布尔值，表示可配置性，默认为`true`。如果设为`false`，将阻止某些操作改写该属性，比如无法<font color='red'>**删除该属性**</font>，也<font color='red'>**不得改变该属性的属性描述对象**</font>。也就是说，`configurable`属性控制了属性描述对象的可写性。
 
->  注意，`writable`只有在`false`改为`true`会报错，`true`改为`false`是允许的。 
+> 注意，`writable`只有在`false`改为`true`会报错，`true`改为`false`是允许的。
 >
->  至于`value`，只要`writable`和`configurable`有一个为`true`，就允许改动。 
+> 至于`value`，只要`writable`和`configurable`有一个为`true`，就允许改动。
 >
->  另外，`writable`为`false`时，直接目标属性赋值，不报错，但不会成功。严格模式下会报错
+> 另外，`writable`为`false`时，直接目标属性赋值，不报错，但不会成功。严格模式下会报错
 
 5. `get`
 
@@ -1449,11 +1428,9 @@ console.log(arr2); //  ["name", "age", "bbb"]
 
 `set`是一个**函数**，表示该属性的存值函数（setter），默认为`undefined`。**不可以和`value`属性同时存在，也不可以和`writable`属性同时存在**
 
+**如果原型对象的某个属性的`writable`为`false`，那么子对象（继承）将无法自定义这个属性。 除非通过方法重新设置属性描述对象**
 
-
- **如果原型对象的某个属性的`writable`为`false`，那么子对象（继承）将无法自定义这个属性。 除非通过方法重新设置属性描述对象** 
-
-### 17.4  存取器
+### 17.4 存取器
 
 > 存值函数：`setter`
 >
@@ -1461,14 +1438,14 @@ console.log(arr2); //  ["name", "age", "bbb"]
 
 ```js
 let o1 = {
-  set p(e){
+  set p(e) {
     console.log(e);
   },
-  get p(){
-    return 123
-  }
-}
-o1.p = 'dddd' // dddd
+  get p() {
+    return 123;
+  },
+};
+o1.p = "dddd"; // dddd
 console.log(o1.p); // 123
 ```
 
@@ -1484,12 +1461,12 @@ var deepCopy = function (to, from) {
     // 如果不是自身属性，跳过此次循环，否则getOwnPropertyDescriptor获取不了描述对象，报错
     if (!from.hasOwnProperty(key)) continue;
 
-    if (Object.prototype.toString.call(from[key]) === '[object Object]') {
-      to[key] = {}
-      deepCopy(to[key], from[key])
-    } else if (Object.prototype.toString.call(from[key]) === '[object Array]') {
-      to[key] = []
-      deepCopy(to[key], from[key])
+    if (Object.prototype.toString.call(from[key]) === "[object Object]") {
+      to[key] = {};
+      deepCopy(to[key], from[key]);
+    } else if (Object.prototype.toString.call(from[key]) === "[object Array]") {
+      to[key] = [];
+      deepCopy(to[key], from[key]);
     } else {
       Object.defineProperty(
         to,
@@ -1499,14 +1476,10 @@ var deepCopy = function (to, from) {
     }
   }
   return to;
-}
+};
 ```
 
-
-
 ## 18. Array
-
-
 
 ## 19. 面向对象
 
@@ -1518,33 +1491,33 @@ var deepCopy = function (to, from) {
 
 ```js
 function Person() {
-    this.name = 'gauhar'
-    this.walk = function () {
-        console.log(1111);
-    }
+  this.name = "gauhar";
+  this.walk = function () {
+    console.log(1111);
+  };
 }
-const p = new Person()
-const p2 = new Person()
-console.log(p.walk === p2.walk);  // false
+const p = new Person();
+const p2 = new Person();
+console.log(p.walk === p2.walk); // false
 ```
 
-#### 19.1.2 prototype属性的作用
+#### 19.1.2 prototype 属性的作用
 
 > 函数默认具有`prototype`属性，指向一个对象，构造函数生成实例的时候，该属性会自动成为实例对象的原型
 
 ```js
 function Person() {
-    this.name = 'gauhar'
-    this.walk = function () {
-        console.log(1111);
-    }
+  this.name = "gauhar";
+  this.walk = function () {
+    console.log(1111);
+  };
 }
 Person.prototype.sayHi = function () {
-    console.log('Hi');
-}
-const p = new Person()
-const p2 = new Person()
-console.log(p.walk === p2.walk);  // false
+  console.log("Hi");
+};
+const p = new Person();
+const p2 = new Person();
+console.log(p.walk === p2.walk); // false
 console.log(p.sayHi === p2.sayHi); // true
 ```
 
@@ -1557,7 +1530,7 @@ console.log(p.sayHi === p2.sayHi); // true
 > 所有对象都继承了`Object.prototype`的属性，而`Object.prototype`的原型是`null`，因此，原型链的尽头就是`null`
 
 ```js
-Object.getPrototypeOf(Object.prototype)  // null
+Object.getPrototypeOf(Object.prototype); // null
 ```
 
 #### 19.1.4 constructor 属性
@@ -1566,11 +1539,7 @@ Object.getPrototypeOf(Object.prototype)  // null
 >
 > 修改原型对象的时候，要同时修改`constructor`指向
 
-
-
-
-
-#### 19.1.1原型链继承
+#### 19.1.1 原型链继承
 
 > 将父类的实例赋值给子类的原型
 >
@@ -1578,62 +1547,15 @@ Object.getPrototypeOf(Object.prototype)  // null
 
 ```js
 function Parent() {
-    this.name = 'gauhar'
+  this.name = "gauhar";
 }
 Parent.prototype.pro = function () {
-    console.log('prototype_pro');
-}
-function Child() {
-
-}
+  console.log("prototype_pro");
+};
+function Child() {}
 // 将父类的实例赋值给子类的原型
-Child.prototype = new Parent()
-const c = new Child()
+Child.prototype = new Parent();
+const c = new Child();
 console.log(c.name); // gauhar
-c.pro() // prototype_pro
+c.pro(); // prototype_pro
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

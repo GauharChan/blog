@@ -1,62 +1,51 @@
-
-
+<Banner />
 ## 常用语法
 
-`v-once` :  只能一次性的插值， 也就是说获取数据后，更新数据的时候不会响应
+`v-once` : 只能一次性的插值， 也就是说获取数据后，更新数据的时候不会响应
 
-`v-html` :  将值以html的语法解析，**（一般很少用到）     如果让用户插值，会很危险** 
+`v-html` : 将值以 html 的语法解析，**（一般很少用到） 如果让用户插值，会很危险**
 
-`v-bind` :  绑定html属性的值，如：**`v-bind:title="msg"`**  `msg 是data中的变量`  
+`v-bind` : 绑定 html 属性的值，如：**`v-bind:title="msg"`** `msg 是data中的变量`
 
-`v-bind 的缩写是冒号`  **:**      如：`v-bind:title="msg"` === **`:title="msg"` **
+`v-bind 的缩写是冒号` **:** 如：`v-bind:title="msg"` === **`:title="msg"` **
 
-`v-on` :  绑定监听事件，如：`v-on:click="函数名"`         里面的值可以是通过函数名去调用函数，或者是简单的运算语法
+`v-on` : 绑定监听事件，如：`v-on:click="函数名"` 里面的值可以是通过函数名去调用函数，或者是简单的运算语法
 
-`v-on` :  缩写   `@`  如：**`@click="函数名"`**  `.native`**修饰符监听组件根元素原生事件** 注意是组件的根元素
+`v-on` : 缩写 `@` 如：**`@click="函数名"`** `.native`**修饰符监听组件根元素原生事件** 注意是组件的根元素
 
-`v-cloak` :  很多情况下，加载页面时，会出现{{}}表达式闪烁的问题，因为那些变量的值是加载完后才覆盖的。
+`v-cloak` : 很多情况下，加载页面时，会出现{{}}表达式闪烁的问题，因为那些变量的值是加载完后才覆盖的。
 
 ```html
- v-cloak指令保持在元素上直到关联实例结束编译后自动移除，v-cloak和 CSS 规则如 [v-cloak] { display: none } 一起用	时，这个指令可以隐藏未编译的 Mustache 标签直到实例准备完毕。
-  通常用来防止{{}}表达式闪烁问题
-  例如：
-  <style>
-  [v-cloak] { display: none }
-  </style>
+v-cloak指令保持在元素上直到关联实例结束编译后自动移除，v-cloak和 CSS 规则如
+[v-cloak] { display: none } 一起用 时，这个指令可以隐藏未编译的 Mustache
+标签直到实例准备完毕。 通常用来防止{{}}表达式闪烁问题 例如：
+<style>
+  [v-cloak] {
+    display: none;
+  }
+</style>
 ```
 
 `v-pre`: 不会解析标签中的插值
 
 ```html
-使用v-pre指令，这个p标签会直接渲染为{{msg}}，就算在data中定义了这个变量也不会解析    
+使用v-pre指令，这个p标签会直接渲染为{{msg}}，就算在data中定义了这个变量也不会解析
 <p v-pre>{{msg}}</p>
 ```
-
-
 
 `v-for`: 循环遍历
 
 ```html
-使用v-for遍历数组，有两个参数：item是数组中的值,index是索引 :key作为遍历到数据的唯一标识
-<li v-for="(item,index) of items" :key=index>
-    {{ item }}
-</li>
+使用v-for遍历数组，有两个参数：item是数组中的值,index是索引
+:key作为遍历到数据的唯一标识
+<li v-for="(item,index) of items" :key="index">{{ item }}</li>
 
-使用v-for遍历对象，有两个参数：value是对象中的值,key是对象的键名 :key作为遍历到数据的唯一标识
-<li v-for="(value,key) in object" :key="value.id">
-    {{ value }}
-</li>
+使用v-for遍历对象，有两个参数：value是对象中的值,key是对象的键名
+:key作为遍历到数据的唯一标识
+<li v-for="(value,key) in object" :key="value.id">{{ value }}</li>
 ```
 
-
-
-
-
-
-
 > 如果在`data`中写函数，则在函数中的`this`指向`window`
-
-
 
 ## 生命周期钩子
 
@@ -76,30 +65,18 @@ beforedestroy: vue实例的销毁函数被调用
 destroyed:vue实例已被销毁 或者是 组件被销毁
 ```
 
-
-
 ![](https://s1.ax1x.com/2020/05/09/YQTka4.png)
-
-
-
-
 
 ![](https://s1.ax1x.com/2020/05/09/YQTAIJ.png)
 
-
-
-
-
-## class和style的绑定
+## class 和 style 的绑定
 
 类名和内联他们的用法是一样的
 
-通过v-bind属性绑定：
+通过 v-bind 属性绑定：
 
 ```html
-<div :class="bgco" :style='nSmall'>
-    somethings
-</div>
+<div :class="bgco" :style="nSmall">somethings</div>
 ```
 
 这个时候应该用计算属性返回`bgco` 的值，这是一个很强大的模式
@@ -131,13 +108,13 @@ computed:{
 <div v-bind:class="[activeClass, errorClass]"></div>
 ```
 
-组件也可以绑定class，这些 class 将被添加到该组件的根元素上面
+组件也可以绑定 class，这些 class 将被添加到该组件的根元素上面
 
 ```vue
 <my-component v-bind:class="{ active: isActive }"></my-component>
 ```
 
-**style的绑定**
+**style 的绑定**
 
 **对象语法**
 
@@ -145,12 +122,7 @@ computed:{
 
 ```vue
 <div v-bind:style="styleObject"></div>
-data: {
-  styleObject: {
-    color: 'red',
-    fontSize: '13px'
-  }
-}
+data: { styleObject: { color: 'red', fontSize: '13px' } }
 ```
 
 同样的，对象语法常常结合返回对象的计算属性使用。
@@ -173,7 +145,7 @@ data: {
 
 ```html
 <!-- 在“change”时而非“input”时更新 -->
-<input v-model.lazy="msg">
+<input v-model.lazy="msg" />
 ```
 
 #### .number
@@ -186,22 +158,22 @@ data: {
 
 > 如果要自动过滤用户输入的首尾空白字符，可以给 `v-model` 添加 `trim` 修饰符
 
-## 组件的v-model
+## 组件的 v-model
 
 > 组件可以使用`v-model`，默认`prop`是`value`，事件名称是`input`
 
 ```vue
 <template>
-	<component-a v-model="name" />
+  <component-a v-model="name" />
 </template>
 <script>
 export default {
-  data () {
+  data() {
     return {
-      name: ''
-    }
-  }
-}
+      name: "",
+    };
+  },
+};
 </script>
 ```
 
@@ -219,39 +191,39 @@ export default {
 
 ```vue
 <template>
-	<input :value="value" @input="$emit('input', $event.target.value)" />
+  <input :value="value" @input="$emit('input', $event.target.value)" />
 </template>
 <script>
 export default {
-  props: ['value']
-}
+  props: ["value"],
+};
 </script>
 ```
 
-更改v-model默认的prop和emit的名称，假设和你组件的prop冲突，或者说checkbox而不是input输入框的时候，prop改为checked更适合，事件改为change。
+更改 v-model 默认的 prop 和 emit 的名称，假设和你组件的 prop 冲突，或者说 checkbox 而不是 input 输入框的时候，prop 改为 checked 更适合，事件改为 change。
 
 > 通过定义`model`选项来改变，**注意`model`中修改后的`prop`名称，在`prop`中要定义**
 
 ```vue
 <template>
-	<!-- 默认的v-model -->
-	<!-- <input :value="value" @input="$emit('input', $event.target.value)" /> -->
-	<input
-      type="checkbox"
-      v-bind:checked="checked"
-      v-on:change="$emit('change', $event.target.checked)"
-   >
+  <!-- 默认的v-model -->
+  <!-- <input :value="value" @input="$emit('input', $event.target.value)" /> -->
+  <input
+    type="checkbox"
+    v-bind:checked="checked"
+    v-on:change="$emit('change', $event.target.checked)"
+  />
 </template>
 <script>
 export default {
   model: {
-    prop: 'checked',
-    event: 'change'
+    prop: "checked",
+    event: "change",
   },
   props: {
-    checked: Boolean
-  }
-}
+    checked: Boolean,
+  },
+};
 </script>
 ```
 
@@ -259,19 +231,19 @@ export default {
 
 ## v-for
 
->  和`v-if`一样， 可以用`<template>`来循环渲染一段包含**多个元素的内容**
+> 和`v-if`一样， 可以用`<template>`来循环渲染一段包含**多个元素的内容**
 >
->  可以用 `of` 替代 `in` 作为分隔符，因为它更接近 JavaScript 迭代器的语法：
+> 可以用 `of` 替代 `in` 作为分隔符，因为它更接近 JavaScript 迭代器的语法：
 >
->  最好给循环的每一项标识唯一的key值
+> 最好给循环的每一项标识唯一的 key 值
 >
->  <font color='red'>如果数组的数据会更新，记得记得`key`用使用`id`而不是`index`，不然会出现视图不更新的情况</font>
+> <font color='red'>如果数组的数据会更新，记得记得`key`用使用`id`而不是`index`，不然会出现视图不更新的情况</font>
 
-1. 循环对象时，第一个参数是键值，第二个参数是键名,  第三个参数是索引
+1. 循环对象时，第一个参数是键值，第二个参数是键名, 第三个参数是索引
 2. 循环数组时，第一个参数是值(`value`)，第二个参数是索引(`index`)
 
 ```vue
-<div v-for="(item,index) of arr">
+<div v-for="(item, index) of arr">
   <p :key="index">{{item}}</p>
 </div>
 ```
@@ -293,16 +265,16 @@ export default {
       event: "",
       msg: "点击了0次",
       count: 0,
-      arr: ["gauhar", "xiao", "giao"]
+      arr: ["gauhar", "xiao", "giao"],
     };
   },
-  mounted(){
-    this.arr[1] = "123";  // 没有效果  本意是想将xiao改成123  但是效果不似预期
+  mounted() {
+    this.arr[1] = "123"; // 没有效果  本意是想将xiao改成123  但是效果不似预期
   },
-}
+};
 ```
 
-可以使用`Vue.set(vm.items, indexOfItem, newValue)`  实例方法`this.$set`=== 全局`Vue.set`
+可以使用`Vue.set(vm.items, indexOfItem, newValue)` 实例方法`this.$set`=== 全局`Vue.set`
 
 ```js
 mounted(){
@@ -328,7 +300,7 @@ mounted(){
 - `sort()`
 - `reverse()`
 
-## 计算属性computed
+## 计算属性 computed
 
 > 不可以执行异步
 
@@ -337,8 +309,6 @@ mounted(){
 ```
 如果返回一个变量，函数方法也可以做到，如果反复使用该变量，每次都要执行这个方法，需要一定的时间；但如果使用计算属性的话，只要这个变量的依赖项没有改变，都会立刻返回这个变量的值,这是他的缓存机制
 ```
-
-
 
 如果想得到的变量是通过一定的处理才得到的，最好使用**`computed`** 函数返回。
 
@@ -359,11 +329,7 @@ computed: {
 }
 ```
 
-
-
-
-
-## 侦听器watch
+## 侦听器 watch
 
 > `watch`可以执行异步
 
@@ -428,21 +394,19 @@ watch: {
 }
 ```
 
-
-
 ## 事件处理
 
 在内联绑定事件的时候，可以传入`$event`，访问原始的 DOM 事件
 
 ```vue
-<button @[bian]="handle('jj',$event)">双数单击，单数双击</button>
+<button @[bian]="handle('jj', $event)">双数单击，单数双击</button>
 <script>
-  handle(str, event) {
-    console.log(event.type);
-    this.count++;
-    this.msg = `点击了${this.count}次`;
-    this.arr[1] = 456
-  }
+handle(str, event) {
+  console.log(event.type);
+  this.count++;
+  this.msg = `点击了${this.count}次`;
+  this.arr[1] = 456
+}
 </script>
 ```
 
@@ -450,7 +414,7 @@ watch: {
 
 > 使用串联修饰符时，要注意顺序
 
-`.capture`:  捕获
+`.capture`: 捕获
 
 ```vue
 <!-- 即内部元素触发的事件先在此处理，然后才交由内部元素进行处理 -->
@@ -499,29 +463,29 @@ watch: {
 
 ## 组件自定义事件
 
-### .sync修饰符
+### .sync 修饰符
 
 > 语法糖，通过`.sync`修饰符前面的值决定`prop`的名称和`emit`事件的名称
 
-假设有一个prop，并且需要更新他的值(类似v-model)
+假设有一个 prop，并且需要更新他的值(类似 v-model)
 
 ```vue
 <template>
-	<component-a :title="title" @update:title="title"></component-a>
+  <component-a :title="title" @update:title="title"></component-a>
 </template>
 ```
 
 `component-a` 那边通过`emit`触发`update:title`事件，传入参数。从而改变父组件的`title`的值
 
-所以上面的代码可以使用.sync代替
+所以上面的代码可以使用.sync 代替
 
 ```vue
 <template>
-	<component-a :title.sync="title"></component-a>
+  <component-a :title.sync="title"></component-a>
 </template>
 ```
 
-假设component-a中执行了`this.$emit('update:title', 123)`时，父组件的`title`的值就是`123`并且更新传给子组件的`prop`
+假设 component-a 中执行了`this.$emit('update:title', 123)`时，父组件的`title`的值就是`123`并且更新传给子组件的`prop`
 
 ## 动态组件
 
@@ -546,33 +510,32 @@ watch: {
 > 公共的基础组件以`Base`开头命名
 
 ```js
-import upperFirst from 'lodash/upperFirst'
-import camelCase from 'lodash/camelCase'
-
+import upperFirst from "lodash/upperFirst";
+import camelCase from "lodash/camelCase";
 
 const requireComponent = require.context(
   // 其组件目录的相对路径
-  './components',
+  "./components",
   // 是否查询其子目录
   false,
   // 匹配基础组件文件名的正则表达式
   /Base[A-Z]\w+\.(vue|js)$/
-)
+);
 
-requireComponent.keys().forEach(fileName => {
+requireComponent.keys().forEach((fileName) => {
   // 获取组件配置
-  const componentConfig = requireComponent(fileName)
+  const componentConfig = requireComponent(fileName);
 
   // 获取组件的 PascalCase 命名
   const componentName = upperFirst(
     camelCase(
       // 获取和目录深度无关的文件名
       fileName
-        .split('/')
+        .split("/")
         .pop()
-        .replace(/\.\w+$/, '')
+        .replace(/\.\w+$/, "")
     )
-  )
+  );
 
   // 全局注册组件
   Vue.component(
@@ -581,17 +544,15 @@ requireComponent.keys().forEach(fileName => {
     // 那么就会优先使用 `.default`，
     // 否则回退到使用模块的根。
     componentConfig.default || componentConfig
-  )
-})
+  );
+});
 ```
-
-
 
 ## 动态参数
 
 > 可以动态绑定属性，事件
 >
-> `attributeName`在data中定义，如：`attributeName: href`
+> `attributeName`在 data 中定义，如：`attributeName: href`
 >
 > `eventName`: `click`
 >
@@ -608,15 +569,13 @@ requireComponent.keys().forEach(fileName => {
 
 ```js
 // vue 自定义指令
-Vue.directive('focus',{
-    inserted(el,binding){
-        // el是使用这个指令的dom元素
-        el.focus();
-    }
+Vue.directive("focus", {
+  inserted(el, binding) {
+    // el是使用这个指令的dom元素
+    el.focus();
+  },
 });
 ```
-
-
 
 ## [过渡的类名](https://cn.vuejs.org/v2/guide/transitions.html#过渡的类名)
 
@@ -630,18 +589,14 @@ Vue.directive('focus',{
 
 1. `v-enter`：定义`进入过渡的开始状态`。在元素被插入之前生效，在元素被插入之后的下一帧移除。
 2. `v-enter-active`：定义进入过渡生效时的状态。在整个进入过渡的阶段中应用，在元素被插入之前生效，在过渡/动画完成之后移除。这个类可以被用来定义进入过渡的过程时间，延迟和曲线函数。
-3. `v-enter-to`: **2.1.8版及以上** 定义`进入过渡的结束状态`。在元素被插入之后下一帧生效 (与此同时 `v-enter` 被移除)，在过渡/动画完成之后移除。
+3. `v-enter-to`: **2.1.8 版及以上** 定义`进入过渡的结束状态`。在元素被插入之后下一帧生效 (与此同时 `v-enter` 被移除)，在过渡/动画完成之后移除。
 4. `v-leave`: 定义`离开过渡的开始状态`。在离开过渡被触发时立刻生效，下一帧被移除。
 5. `v-leave-active`：定义离开过渡生效时的状态。在整个离开过渡的阶段中应用，在离开过渡被触发时立刻生效，在过渡/动画完成之后移除。这个类可以被用来定义离开过渡的过程时间，延迟和曲线函数。
-6. `v-leave-to`: **2.1.8版及以上** 定义`离开过渡的结束状态`。在离开过渡被触发之后下一帧生效 (与此同时 `v-leave` 被删除)，在过渡/动画完成之后移除。
+6. `v-leave-to`: **2.1.8 版及以上** 定义`离开过渡的结束状态`。在离开过渡被触发之后下一帧生效 (与此同时 `v-leave` 被删除)，在过渡/动画完成之后移除。
 
 ### 从无到有，有到无
 
 ![](https://s1.ax1x.com/2020/05/09/YQTFZF.png)
-
-
-
-
 
 路由映射组件
 
@@ -649,34 +604,27 @@ Vue.directive('focus',{
 
 `$emit` 定义自定义事件
 
-`$on`   监听自定义事件
+`$on` 监听自定义事件
 
 父子组件的关系是使用关系，被使用的是子组件
 
-
-
 删除本地存储：`removeItem`
-
-
 
 ### element-ui
 
 ```html
 <!-- 这里的prop的值是绑定验证规则的，prop值必须和v-model绑定的属性值相同，否则验证规则会拿不到值 -->
 <el-form-item label="商品名称" prop="name">
-    <el-input v-model="goodsForm.name"></el-input>
+  <el-input v-model="goodsForm.name"></el-input>
 </el-form-item>
 
 错误例子:
-<el-form-item label="商品名称" prop="username"> // 这里和v-model的name不相同，验证规则拿不到值
-    <el-input v-model="goodsForm.name"></el-input>
+<el-form-item label="商品名称" prop="username">
+  // 这里和v-model的name不相同，验证规则拿不到值
+  <el-input v-model="goodsForm.name"></el-input>
 </el-form-item>
 
-
-rules:{
-	name:[
-		{ required: true, message: '请输入商品名称', trigger: 'blur' }
-	]
+rules:{ name:[ { required: true, message: '请输入商品名称', trigger: 'blur' } ]
 }
 ```
 
@@ -716,7 +664,7 @@ prop: {
 父组件
 
 ```vue
-<HelloWorld msg="Welcome to Your Vue.js App" >
+<HelloWorld msg="Welcome to Your Vue.js App">
     <div>这是默认插槽</div>
 </HelloWorld>
 ```
@@ -742,7 +690,7 @@ prop: {
 父组件中使用`<template v-slot:girl></template>`
 
 ```vue
-<HelloWorld msg="Welcome to Your Vue.js App" >
+<HelloWorld msg="Welcome to Your Vue.js App">
     <template v-slot:girl>
         <div>这是具名插槽</div>
         <div>这是具名插槽2</div>
@@ -780,12 +728,12 @@ prop: {
 
 ```vue
 <template v-slot:girl="slotUser">
-    <div>{{slotUser.girl.sex}}</div>
-    <div>{{slotUser.girl.age}}</div>
+  <div>{{ slotUser.girl.sex }}</div>
+  <div>{{ slotUser.girl.age }}</div>
 </template>
 <template v-slot="slotUser">
-    <div>{{slotUser.user.age}}</div>
-    <div>{{slotUser.user.name}}</div>
+  <div>{{ slotUser.user.age }}</div>
+  <div>{{ slotUser.user.name }}</div>
 </template>
 ```
 
@@ -807,15 +755,15 @@ prop: {
 export default {
   data() {
     return {
-      user:{
-        name: 'gauhar',
-        age: 18
+      user: {
+        name: "gauhar",
+        age: 18,
       },
-      girl:{
-        sex: '👧',
-        age: '🍎'
+      girl: {
+        sex: "👧",
+        age: "🍎",
       },
-    }
+    };
   },
 };
 </script>
@@ -825,35 +773,29 @@ export default {
 
 ```vue
 <template v-slot:girl="slotUser">
-    <div>{{slotUser.girlr.sex}}</div>
-    <div>{{slotUser.girlr.age}}</div>
+  <div>{{ slotUser.girlr.sex }}</div>
+  <div>{{ slotUser.girlr.age }}</div>
 </template>
 
 <template v-slot:girl>
-    <div>这是具名插槽</div>
-    <div>这是具名插槽2</div>
+  <div>这是具名插槽</div>
+  <div>这是具名插槽2</div>
 </template>
 
-// 页面内容：
-这是具名插槽
-这是具名插槽2
-
+// 页面内容： 这是具名插槽 这是具名插槽2
 --------------------------------------------------------------------
 
 <template v-slot:girl>
-    <div>这是具名插槽</div>
-    <div>这是具名插槽2</div>
+  <div>这是具名插槽</div>
+  <div>这是具名插槽2</div>
 </template>
 
 <template v-slot:girl="slotUser">
-    <div>{{slotUser.girlr.sex}}</div>
-    <div>{{slotUser.girlr.age}}</div>
+  <div>{{ slotUser.girlr.sex }}</div>
+  <div>{{ slotUser.girlr.age }}</div>
 </template>
 
-// 页面内容：
-👧
-🍎
-
+// 页面内容： 👧 🍎
 ```
 
 上面这两个都是具名插槽`girl`，页面不会展示两个模板，只会显示后面的模板。
@@ -864,11 +806,11 @@ export default {
 
 ```js
 // 调用 `MyPlugin.install(Vue)`
-Vue.use(MyPlugin, {...options})
+Vue.use(MyPlugin, { ...options });
 
 new Vue({
   // ...组件选项
-})
+});
 ```
 
 ### 开发插件
@@ -904,20 +846,20 @@ filters: {
 创建 Vue 实例之前全局定义过滤器：
 
 ```js
-Vue.filter('capitalize', function (value) {
-  if (!value) return ''
-  value = value.toString()
-  return value.charAt(0).toUpperCase() + value.slice(1)
-})
+Vue.filter("capitalize", function (value) {
+  if (!value) return "";
+  value = value.toString();
+  return value.charAt(0).toUpperCase() + value.slice(1);
+});
 
 new Vue({
   // ...
-})
+});
 ```
 
 ## vuex
 
-流程 ：通过`dispatch`调用`actions`的方法，在`actions`的方法中调用`mutations`的处理数据的方法，mutations是专门处理`state`的数据的函数。最终通过`getters`的方法获取数据（变量)。
+流程 ：通过`dispatch`调用`actions`的方法，在`actions`的方法中调用`mutations`的处理数据的方法，mutations 是专门处理`state`的数据的函数。最终通过`getters`的方法获取数据（变量)。
 
 ```js
 //store.js
@@ -960,26 +902,22 @@ mounted(){
 <div>{{$store.getters.getData}}</div>    // 传递的值
 ```
 
-
-
 ## 打包的常见错误
 
 **1.** 文件路径错误
 
 ![打包错误2](https://s1.ax1x.com/2020/05/09/YQTVi9.png)
 
-**解决方法**： 增加一个vue.config.js的配置文件
+**解决方法**： 增加一个 vue.config.js 的配置文件
 
 ```js
 // vue.config.js
 module.exports = {
   // other config
   productionSourceMap: false,
-  publicPath: './'
-}
+  publicPath: "./",
+};
 ```
-
-
 
 ## async
 
@@ -995,14 +933,12 @@ test();
 
 `async` 描述一个函数，函数里面使用`await` 接收一个`promise`对象返回的`resolve`回调函数中的参数
 
-
-
 图片路径引入方式
 
->通过`require`引入相对路径
+> 通过`require`引入相对路径
 
 ```js
-require('../../assets/images/avatar.jpg')  
+require("../../assets/images/avatar.jpg");
 ```
 
 ## router
@@ -1019,7 +955,7 @@ require('../../assets/images/avatar.jpg')
 8. 调用全局解析守卫 `beforeResolve`
 9. 导航被确认。
 10. 调用全局后置钩子的 `afterEach` 钩子。
-11. 触发DOM更新(`mounted`)。
+11. 触发 DOM 更新(`mounted`)。
 12. 执行`beforeRouteEnter` 守卫中传给 next 的回调函数
 
 ## 重写打印
@@ -1032,17 +968,15 @@ require('../../assets/images/avatar.jpg')
 
 ```js
 Vue.prototype.$print = (obj, type) => {
-    type = type || "log";
-    try {
-        const log = JSON.parse(JSON.stringify(obj));
-        console[type](log)
-    } catch (error) {
-        console[type](log)
-    }
-}
+  type = type || "log";
+  try {
+    const log = JSON.parse(JSON.stringify(obj));
+    console[type](log);
+  } catch (error) {
+    console[type](log);
+  }
+};
 ```
-
-
 
 ## [处理边界情况](https://cn.vuejs.org/v2/guide/components-edge-cases.html)
 
@@ -1069,8 +1003,6 @@ export default {
   }
 ```
 
-
-
 ### 事件侦听器
 
 - 通过 `$on(eventName, eventHandler)` 侦听一个事件
@@ -1080,10 +1012,10 @@ export default {
 > `$emit`定义自定义事件，`$on`监听(触发)自定义事件，`$off`停止监听
 
 ```js
-vm.$on('test', function (msg) {
-  console.log(msg)
-})
-vm.$emit('test', 'hi')
+vm.$on("test", function (msg) {
+  console.log(msg);
+});
+vm.$emit("test", "hi");
 // => "hi"
 ```
 
@@ -1130,8 +1062,6 @@ export default {
     };
   }
 </script>
-
-
 ```
 
 ### 内联模板
@@ -1156,56 +1086,5 @@ export default {
 > 直接调用即可，如果是因为新增对象或者数组的属性、请使用`this.$set`新增属性
 
 ```js
-this.$forceUpdate()
+this.$forceUpdate();
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

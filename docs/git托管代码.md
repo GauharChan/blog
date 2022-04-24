@@ -1,3 +1,4 @@
+<Banner />
 把远程仓库初始化之后，需要先迁移到本地
 
 需要使用一个命令
@@ -24,7 +25,7 @@ git add .
 git commit -m '备注信息'
 ```
 
--m是主分支的意思
+-m 是主分支的意思
 
 上面两步仅仅是在本地进行提交了，还要一个操作才能把项目提交到远程仓库
 
@@ -44,11 +45,9 @@ git pull
 git push
 ```
 
-
-
 #### 常见错误
 
-##### pull出错：
+##### pull 出错：
 
 - 不能合并没有任何关联的历史记录
 
@@ -58,7 +57,7 @@ git push
 
 ![21-pull-success](assets\21-pull-success.png)
 
-- pull的时候有可能造成文件冲突：都有README.md文件
+- pull 的时候有可能造成文件冲突：都有 README.md 文件
 
 ![22-conflict](assets\22-conflict.png)
 
@@ -66,13 +65,4 @@ git push
 
   ![23-conflict-deal](assets\23-conflict-deal.png)
 
-
-
-
-
 ![放弃本地修改](C:\Users\24642\Desktop\git笔记\assets\放弃本地修改.png)
-
-
-
-
-

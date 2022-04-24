@@ -1,6 +1,22 @@
 module.exports = {
   title: "gauhar's blog",
   description: 'just a blog',
+  head: [
+    [
+      'script',
+      {
+        async: true,
+        // crossorigin: 'anonymous',
+        src: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1206812165499181'
+      }
+    ],
+    [
+      'link',
+      {
+        rel: 'icon', href: '/favicon.ico'
+      }
+    ]
+  ], 
   themeConfig: {
     // logo: '/assets/logo.jpg',
     sidebarDepth: 6,
@@ -13,8 +29,16 @@ module.exports = {
     ],
     sidebar: [
       [
+        '/react笔记',
+        'react'
+      ],
+      [
         '/vue3',
         'vue3'
+      ],
+      [
+        '/vue3源码',
+        'vue3源码'
       ],
       [
         '/antv',
@@ -23,6 +47,10 @@ module.exports = {
       [
         '/typeScript',
         'typeScript'
+      ],
+      [
+        '/taro',
+        'taro1.x'
       ],
       [
         '/uniapp',
@@ -81,10 +109,10 @@ module.exports = {
         '/note',
         'note'
       ],
-      [
-        '/git托管代码',
-        'git托管代码'
-      ],
+      // [
+      //   '/git托管代码',
+      //   'git托管代码'
+      // ],
     ]
   }
 }
