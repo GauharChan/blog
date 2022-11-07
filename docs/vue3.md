@@ -581,6 +581,43 @@ const props = withDefaults(defineProps<Props>(), {
 });
 ```
 
+## 调试
+
+### console
+
+> 其实`vue3`内部实现了一个`initCustomFormatter` 让我们在开发模式下更加直观美化的展示我们打印的东西
+
+比如打印一个`ref`对象
+
+**未开启功能前**
+
+![image-20221107164615074](https://raw.githubusercontent.com/GauharChan/Picture-bed/main/img/image-20221107164615074.png)
+
+像我这个强迫症，我是一定会把那个未展开的value点一下的😄
+
+**开启后**
+
+![image-20221107164441262](https://raw.githubusercontent.com/GauharChan/Picture-bed/main/img/image-20221107164441262.png)
+
+非常直观，知道是一个ref，然后值是1
+
+一般情况下，我们只关心这个`ref`的`value`，而不关心他身上的一些其他标识，比如上面的`__v_isRef 、__v_isShallow`ReactiveFlags；这两个标识分别是
+
+- 是否为`ref`对象
+- 是否为浅层代理
+
+`_rawValue`: 原始数据
+
+#### 开启美化方法
+
+> 摘录来自Vue.js设计与实现 霍春阳（HcySunYang）
+
+“以 Chrome 为例，我们可以打开 DevTools 的设置，然后勾选“Console”→“Enable custom formatters”选项”
+
+![image-20221107170044242](https://raw.githubusercontent.com/GauharChan/Picture-bed/main/img/image-20221107170044242.png)
+
+然后刷新即可使用😎
+
 ## 路由
 
 ```js

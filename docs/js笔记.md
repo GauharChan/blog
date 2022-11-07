@@ -10,6 +10,28 @@ categories: JavaScript
 
 ## JavaScript
 
+### 事件循环
+
+- 调用栈，后进先出
+- 队列，先进先出
+- **macro-task(宏任务 Task)**
+  - script(整体代码)
+  - setTimeout/setinterval
+  - setlmmediate
+  - I/O 操作
+  - UI rendering
+- **micro-task (微任务 Job)**
+  - process.nextTick
+  - Promise.then
+  - MutationObserve
+  - async/await
+
+Javscript 的执行机制是: 首先事件循环从宏任务队列开始, 这个时候宏任务队列中, 只有一个script(整体代码)任务. 每一个任务的执行顺序, 都依靠**函数调用栈**来搞定, 而当遇到任务源时, 则会先分发任务到对应的队列中去, 先执行调用栈中的函数, 当调用栈中的执行上下文全部被弹出, **只剩下全局执行上下文的时候, 就开始执行 Job 执行队列**, Job 执行队列执行完成后就开始执行 Task 执行队列, 先进入的先执行, 后进入的后执行, 无论是 Task 还是 Job 都是通过函数调用栈来执行. Task 执行完一个, JavaScript 引擎会继续检查是否有 Job 需要执行. 就形成了 Task--Job--Task--Job 的循环, 这就行形成了事件循环 ( Event Loop).
+
+所以大概就是`调用栈`->`微任务`->`宏任务`->`微任务`->`宏任务`->`微、宏一直重复`
+
+其中重点是在执行微任务的时候遇到**微任务，会加入到微任务队列中并执行**
+
 ### isNaN()
 
 > `isNaN()` 函数用于检查其参数是否是非数字值。
