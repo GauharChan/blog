@@ -1,6 +1,7 @@
 module.exports = {
   title: "gauhar's blog",
   description: 'just a blog',
+  base: '/blog',
   head: [
     [
       'script',
@@ -27,6 +28,7 @@ module.exports = {
         text: '其他版本博客', 
         items: [
           { text: 'vitepress版', link: 'https://gauharchan.github.io/' },
+          { text: '某node资源', link: 'https://gauhar.gitee.io/vuepress_node/' },
           { text: 'hexo版(不维护)', link: 'https://gauhar.gitee.io/' },
         ]
       },
