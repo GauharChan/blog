@@ -23,7 +23,13 @@ module.exports = {
     lastUpdated: '最后修改时间',
     smoothScroll: true,
     nav: [
-      { text: 'hexo版博客', link: 'https://gauhar.gitee.io/' },
+      {
+        text: '其他版本博客', 
+        items: [
+          { text: 'vitepress版', link: 'https://gauharchan.github.io/' },
+          { text: 'hexo版(不维护)', link: 'https://gauhar.gitee.io/' },
+        ]
+      },
       { text: '码云', link: 'https://gitee.com/gauhar' },
       { text: 'GitHub', link: 'https://github.com/GauharChan' },
     ],
