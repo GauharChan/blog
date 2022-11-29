@@ -33,7 +33,7 @@ module.exports = {
         ]
       },
       { text: '码云', link: 'https://gitee.com/gauhar' },
-      { text: 'GitHub', link: 'https://github.com/GauharChan' },
+      { text: 'GitHub', link: 'https://github.com/GauharChan/blog' },
     ],
     sidebar: [
       [
