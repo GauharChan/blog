@@ -1,7 +1,7 @@
 module.exports = {
   title: "gauhar's blog",
   description: 'just a blog',
-  base: '/blog',
+  base: '/blog/',
   head: [
     [
       'script',
