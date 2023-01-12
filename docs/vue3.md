@@ -106,7 +106,7 @@ const state = reactive({
 // 使用函数返回
 watch(
   () => state.name,
-  (newVal, oldVal) => {
+  (newVal, oldVal, onInvalidate) => {
     console.log(newVal, oldVal, "watch");
   }
 );
@@ -123,11 +123,17 @@ state.name = "gauhar";
 
 ```js
 let num = ref(0);
-watch(num, (newVal, oldVal) => {
+watch(num, (newVal, oldVal, onInvalidate) => {
   console.log(newVal, oldVal, "watch1"); // 123 0
 });
 num.value = 123;
 ```
+
+::: tip 提示
+
+注意`watchCallback`的第三个参数是`onInvalidate`，[详情请看](/vue3.html#oninvalidate)
+
+:::
 
 #### 同时监听多个
 
@@ -230,7 +236,11 @@ watchEffect(() => {
 
 #### onInvalidate()
 
+过期钩子函数，他的执行时机是**“在 watch 内部每次检测到变更后，在副作用函数重新执行之前”**
+
 `onInvalidate(fn)`传入的回调会在 `watchEffect` 重新运行或者 `watchEffect` 停止的时候执行
+
+常用于在`WatchCallback`中控制异步操作，比如在`callback`中发起请求，触发了两次`watch`，也就是触发了两次请求，一般情况下，我们只关心最后一次的结果，那么就可以在这个函数中取消请求
 
 ```js
 watchEffect((onInvalidate) => {
@@ -593,13 +603,13 @@ const props = withDefaults(defineProps<Props>(), {
 
 ![image-20221107164615074](https://raw.githubusercontent.com/GauharChan/Picture-bed/main/img/image-20221107164615074.png)
 
-像我这个强迫症，我是一定会把那个未展开的value点一下的😄
+像我这个强迫症，我是一定会把那个未展开的 value 点一下的 😄
 
 **开启后**
 
 ![image-20221107164441262](https://raw.githubusercontent.com/GauharChan/Picture-bed/main/img/image-20221107164441262.png)
 
-非常直观，知道是一个ref，然后值是1
+非常直观，知道是一个 ref，然后值是 1
 
 一般情况下，我们只关心这个`ref`的`value`，而不关心他身上的一些其他标识，比如上面的`__v_isRef 、__v_isShallow`ReactiveFlags；这两个标识分别是
 
@@ -610,13 +620,13 @@ const props = withDefaults(defineProps<Props>(), {
 
 #### 开启美化方法
 
-> 摘录来自Vue.js设计与实现 霍春阳（HcySunYang）
+> 摘录来自 Vue.js 设计与实现 霍春阳（HcySunYang）
 
 “以 Chrome 为例，我们可以打开 DevTools 的设置，然后勾选“Console”→“Enable custom formatters”选项”
 
 ![image-20221107170044242](https://raw.githubusercontent.com/GauharChan/Picture-bed/main/img/image-20221107170044242.png)
 
-然后刷新即可使用😎
+然后刷新即可使用 😎
 
 ## 路由
 
