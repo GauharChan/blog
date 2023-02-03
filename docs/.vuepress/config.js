@@ -23,6 +23,11 @@ module.exports = {
     sidebarDepth: 6,
     lastUpdated: '最后修改时间',
     smoothScroll: true,
+    algolia: {
+      apiKey: '5eab7b5934320ea31c01a784d870c42e',
+      indexName: 'gauharchanio',
+      appId: '0RCW80M362',
+    },
     nav: [
       {
         text: '其他版本博客', 
