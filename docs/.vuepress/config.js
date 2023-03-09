@@ -42,6 +42,10 @@ module.exports = {
     ],
     sidebar: [
       [
+        '/vite-plugin-shared',
+        'vite插件-shared'
+      ],
+      [
         '/react笔记',
         'react'
       ],
