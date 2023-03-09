@@ -24,9 +24,9 @@ module.exports = {
     lastUpdated: '最后修改时间',
     smoothScroll: true,
     algolia: {
-      apiKey: '5eab7b5934320ea31c01a784d870c42e',
-      indexName: 'gauharchanio',
-      appId: '0RCW80M362',
+      apiKey: '67b9e9d809235b458744688bdb34d141',
+      indexName: 'gauharchanioblog',
+      appId: '5TXT39BJUN',
     },
     nav: [
       {
