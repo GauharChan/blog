@@ -46,6 +46,10 @@ module.exports = {
         'vite插件-shared'
       ],
       [
+        '/Taro开发中的坑',
+        'Taro+NutUI'
+      ],
+      [
         '/react笔记',
         'react'
       ],
