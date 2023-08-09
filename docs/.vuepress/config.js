@@ -47,7 +47,7 @@ module.exports = {
       ],
       [
         '/Taro开发中的坑',
-        'Taro+NutUI'
+        'Taro3.x'
       ],
       [
         '/react笔记',
